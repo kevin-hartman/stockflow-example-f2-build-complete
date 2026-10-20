@@ -419,7 +419,7 @@ fi
 # from the current git branch + the Lakebase tier inventory. --force makes re-runs idempotent.
 #
 # It only recognizes a long-running TIER branch (main/staging) or a feature/<slug> branch – NOT
-# a feature-<id> branch like feature-f1-stock-visibility (else: "unrecognized-branch"). So seed
+# a feature-<id> branch like feature-f2-stock-adjustment (else: "unrecognized-branch"). So seed
 # from a tier branch, then return to the working branch; the build lane claims the feature
 # branch afterwards.
 # First commit the config edits (deploy-targets.yaml from 7b) so the tier hop below checks out
@@ -447,7 +447,7 @@ fi
 # cuts the paired Lakebase branch, and syncs .env. Without this, /build refuses (feature_id is
 # empty, so it would write onto the tier parent). The feature-id is the .consort/features/<id>
 # that matches the current feature-<slug> branch (recovering the dir's exact casing, e.g.
-# feature-f1-stock-visibility -> F1-stock-visibility).
+# feature-f2-stock-adjustment -> F2-stock-adjustment).
 case "$FEATURE_BRANCH" in
   feature-*|feature/*)
     FEATURE_ID="${FEATURE_BRANCH#feature-}"; FEATURE_ID="${FEATURE_ID#feature/}"
