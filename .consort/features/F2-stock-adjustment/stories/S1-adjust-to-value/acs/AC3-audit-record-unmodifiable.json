@@ -1,6 +1,6 @@
 {
   "id": "AC3-audit-record-unmodifiable",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing adjustment audit record",
   "when": "any attempt is made to edit or delete that audit record after the fact",
   "then": "the attempt is rejected and the audit record remains retrievable with its original values unchanged",

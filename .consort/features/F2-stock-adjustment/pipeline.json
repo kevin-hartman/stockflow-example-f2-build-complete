@@ -3,7 +3,7 @@
   "feature_id": "F2-stock-adjustment",
   "stories": {
     "S1-adjust-to-value": {
-      "status": "building",
+      "status": "awaiting-acceptance",
       "gate": {
         "status": "approved",
         "history": [
@@ -15,6 +15,19 @@
         ],
         "approver": "Kevin Hartman",
         "approved_at": "2026-10-20T13:54:15.082Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s1-adjust-to-value-exp1",
+        "parent": "feature-f2-stock-adjustment",
+        "n": 1,
+        "status": "active",
+        "cut_at": "2026-10-20T21:19:36.229Z",
+        "design_fingerprint": "d3877a7b72e38522"
+      },
+      "acceptance": {
+        "decision": null,
+        "history": []
       }
     },
     "S2-adjust-by-delta": {

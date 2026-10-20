@@ -1,6 +1,6 @@
 {
   "id": "AC2-audit-record-captures-when-and-who",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair",
   "when": "the operator successfully adjusts its quantity to a corrected value",
   "then": "exactly one adjustment audit record is retrievable for that adjustment, naming the sku, the location, the prior quantity, the new quantity, the time it happened, and the actor the operator entered",

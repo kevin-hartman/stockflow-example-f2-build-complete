@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "feature_id": "F2-stock-adjustment",
+  "story_id": "S1-adjust-to-value",
+  "target": "local",
+  "url": "http://127.0.0.1:8002/health",
+  "reachable": true,
+  "verify": {
+    "passed": true,
+    "command": "./scripts/run-tests.sh",
+    "summary": "feature-verify passed against the running app"
+  },
+  "lakebase_branch": "experiment-s1-adjust-to-value-exp1",
+  "deployed_at": "2026-10-20T21:30:43.140Z"
+}

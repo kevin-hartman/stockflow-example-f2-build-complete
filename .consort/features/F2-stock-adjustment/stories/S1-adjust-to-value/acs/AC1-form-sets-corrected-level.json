@@ -1,6 +1,6 @@
 {
   "id": "AC1-form-sets-corrected-level",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator opens the adjustment form for that pair, whose fields carry visible persistent labels, enters a corrected quantity of 4 and their name as the actor, and submits",
   "then": "the operator lands on a confirmation (or green inline flash) for the adjustment, and viewing that (sku, location) afterwards shows quantity 4",

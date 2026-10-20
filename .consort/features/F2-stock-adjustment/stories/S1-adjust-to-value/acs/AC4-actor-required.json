@@ -1,6 +1,6 @@
 {
   "id": "AC4-actor-required",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator submits the adjustment form with a corrected quantity but leaves the actor field empty",
   "then": "the adjustment is rejected with an inline error next to the actor field naming that field (not a generic 'bad request'), the quantity stays 7, and no audit record is created",
