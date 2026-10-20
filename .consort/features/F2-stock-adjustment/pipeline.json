@@ -3,7 +3,7 @@
   "feature_id": "F2-stock-adjustment",
   "stories": {
     "S1-adjust-to-value": {
-      "status": "ready",
+      "status": "building",
       "gate": {
         "status": "approved",
         "history": [
@@ -49,9 +49,8 @@
     }
   },
   "build_queue": [
-    "S1-adjust-to-value",
     "S2-adjust-by-delta",
     "S3-reject-negative-stock"
   ],
-  "build_active": null
+  "build_active": "S1-adjust-to-value"
 }
