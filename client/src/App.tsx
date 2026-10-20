@@ -3,6 +3,7 @@ import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { FileStockPage } from "./pages/FileStockPage";
 import { SkuDetailPage } from "./pages/SkuDetailPage";
+import { AdjustPage } from "./pages/AdjustPage";
 
 // Route-level composition lives here. Pages compose components and use hooks
 // for data; components and hooks never wire routes themselves. EVERY feature
@@ -33,6 +34,12 @@ export function App() {
             File stock
           </NavLink>
           <NavLink
+            to="/adjust"
+            className={({ isActive }) => `navbar__link${isActive ? " navbar__link--active" : ""}`}
+          >
+            Adjust stock
+          </NavLink>
+          <NavLink
             to="/about"
             className={({ isActive }) => `navbar__link${isActive ? " navbar__link--active" : ""}`}
           >
@@ -43,6 +50,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/file" element={<FileStockPage />} />
+        <Route path="/adjust" element={<AdjustPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/sku/:sku" element={<SkuDetailPage />} />
       </Routes>

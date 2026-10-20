@@ -295,3 +295,61 @@ def test_all_adjustment_responses_are_json(client):
     for r in resps:
         assert r.headers["content-type"].startswith("application/json")
         assert "text/html" not in r.headers["content-type"]
+
+
+# ---- S1 AC1 / AC4 (form-driven adjust + actor required) ----
+@pytest.mark.testid("T1")
+def test_adjust_sets_exactly_one_stock_record_to_new_quantity(client, pg_session):
+    sku, loc = _seed(client, 7)
+    assert _adjust(client, sku, loc, 4, "alice").status_code == 201
+    rows = pg_session.execute(sa.text("SELECT quantity FROM stock_records WHERE sku=:s AND location=:l"),
+                              {"s": sku, "l": loc}).all()
+    assert [r[0] for r in rows] == [4]
+
+
+@pytest.mark.testid("T29")
+def test_raw_insert_empty_actor_rejected_by_check(pg_session):
+    sku, loc = _seed_row(pg_session)
+    with pytest.raises(sa.exc.IntegrityError, match="ck_stock_adjustments_actor_non_blank"):
+        _raw_insert(pg_session, sku=sku, location=loc, actor="")
+
+
+@pytest.mark.testid("T30")
+def test_empty_actor_post_returns_422_naming_actor(client):
+    sku, loc = _seed(client, 7)
+    r = _adjust(client, sku, loc, 4, "")
+    assert r.status_code == 422
+    assert "actor" in str(r.json()["detail"])
+
+
+@pytest.mark.testid("T31")
+def test_empty_actor_post_leaves_quantity_unchanged(client, pg_session):
+    sku, loc = _seed(client, 7)
+    assert _adjust(client, sku, loc, 4, "").status_code == 422
+    q = pg_session.execute(sa.text("SELECT quantity FROM stock_records WHERE sku=:s AND location=:l"),
+                           {"s": sku, "l": loc}).scalar_one()
+    assert q == 7
+
+
+@pytest.mark.testid("T32")
+def test_empty_actor_post_writes_no_audit_row(client, pg_session):
+    sku, loc = _seed(client, 7)
+    count_sql = sa.text("SELECT count(*) FROM stock_adjustments WHERE sku=:s AND location=:l")
+    before = pg_session.execute(count_sql, {"s": sku, "l": loc}).scalar_one()
+    assert _adjust(client, sku, loc, 4, "").status_code == 422
+    pg_session.rollback()
+    after = pg_session.execute(count_sql, {"s": sku, "l": loc}).scalar_one()
+    assert after - before == 0
+
+
+@pytest.mark.testid("T33")
+def test_service_blank_actor_never_reaches_repository_write():
+    from unittest.mock import MagicMock, patch
+
+    from app.services.adjustments import AdjustmentService
+
+    with patch("app.services.adjustments.AdjustmentRepository") as repo_cls:
+        with pytest.raises(ValueError, match="actor"):
+            AdjustmentService().adjust_to_value(MagicMock(), sku="s", location="l", quantity=4, actor="   ")
+        repo_cls.return_value.add.assert_not_called()
+        repo_cls.return_value.commit.assert_not_called()
