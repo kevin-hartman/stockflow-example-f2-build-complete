@@ -25,6 +25,7 @@ import os
 import subprocess
 import tempfile
 import time
+import urllib.error
 import urllib.request
 
 import pytest
@@ -41,7 +42,7 @@ def _is_up(url: str) -> bool:
             return resp.status < 500
     except urllib.error.HTTPError as exc:  # noqa: PERF203 - a 4xx still means it's up
         return exc.code < 500
-    except Exception:
+    except (urllib.error.URLError, ConnectionError, TimeoutError, OSError):
         return False
 
 

@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import locations, skus, stock
+from app.routes import adjustments, locations, skus, stock
 from app.routes.errors import validation_error_handler
 
 app = FastAPI(title="stockflow-example", version="0.1.0")
@@ -15,6 +15,7 @@ app.add_exception_handler(RequestValidationError, validation_error_handler)
 app.include_router(stock.router)
 app.include_router(locations.router)
 app.include_router(skus.router)
+app.include_router(adjustments.router)
 
 
 @app.get("/health")
