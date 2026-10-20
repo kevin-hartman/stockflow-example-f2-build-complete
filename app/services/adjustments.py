@@ -22,7 +22,7 @@ class AdjustmentService:
         self, session: Session, *, sku: str, location: str, quantity: int, actor: str
     ) -> StockAdjustment:
         if quantity < 0:
-            raise ValueError("quantity must be zero or more")
+            raise ValueError("corrected quantity must be zero or more")
         return self._apply(session, sku=sku, location=location, actor=actor, compute=lambda _prior: quantity)
 
     def adjust_by_delta(
@@ -43,7 +43,7 @@ class AdjustmentService:
         quantity = compute(prior)
         if quantity < 0:
             repo.rollback()
-            raise NegativeStockLevel(f"Adjustment would take {sku} at {location} below zero (current {prior})")
+            raise NegativeStockLevel(f"Rejected: quantity would go below zero (current {prior}, result {quantity})")
         record.quantity = quantity
         repo.flush()
         adjustment = repo.add(

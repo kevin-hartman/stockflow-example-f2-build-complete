@@ -16,7 +16,7 @@ service = AdjustmentService()
 class AdjustIn(BaseModel):
     sku: str = Field(min_length=1, max_length=255)
     location: str = Field(min_length=1, max_length=255)
-    quantity: int | None = Field(default=None, ge=0)
+    quantity: int | None = None
     delta: int | None = None
     actor: str = Field(min_length=1, max_length=255)
 
@@ -26,6 +26,13 @@ class AdjustIn(BaseModel):
         if not v.strip():
             raise ValueError("must not be blank")
         return v.strip()
+
+    @field_validator("quantity")
+    @classmethod
+    def _not_negative(cls, v: int | None) -> int | None:
+        if v is not None and v < 0:
+            raise ValueError("corrected quantity must be zero or more")
+        return v
 
     @field_validator("delta")
     @classmethod
