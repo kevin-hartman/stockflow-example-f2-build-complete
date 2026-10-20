@@ -1,0 +1,4 @@
+[
+  {"id": "cmp-1", "description": "The delta preview component renders current quantity 7 and resulting quantity 12 for a +5 delta on a real stock record, exposed at the adjust-delta-preview seam", "ac_id": "AC1-positive-delta-increases-level", "status": "pending", "kind": "component", "scenario_file": "client/tests/components/AdjustDeltaPreview.test.tsx"},
+  {"id": "cmp-2", "description": "The delta preview component renders current quantity 7 and resulting quantity 4 for a -3 delta on a real stock record, exposed at the adjust-delta-preview seam", "ac_id": "AC2-negative-delta-decreases-level", "status": "pending", "kind": "component", "scenario_file": "client/tests/components/AdjustDeltaPreview.test.tsx"}
+]

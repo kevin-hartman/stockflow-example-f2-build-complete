@@ -1,0 +1,1 @@
+{"id":"F2-stock-adjustment","name":"Adjust the stock level of a SKU at a location","status":"draft","tdd_mode":"N=1","stories":["S1-adjust-to-value","S2-adjust-by-delta","S3-reject-negative-stock"]}

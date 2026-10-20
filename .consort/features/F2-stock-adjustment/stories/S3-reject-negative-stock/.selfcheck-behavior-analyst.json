@@ -1,0 +1,7 @@
+[
+{"id":"bhv-1","description":"POST /api/adjustments with a delta taking quantity 7 to -3 directly returns 422 whose detail names field 'delta' (message 'quantity would go below zero')","ac_id":"AC4-negative-rejected-at-write-without-form","status":"pending","kind":"behavior"},
+{"id":"bhv-2","description":"After the rejected below-zero delta POST, GET of the stock record still returns quantity 7","ac_id":"AC4-negative-rejected-at-write-without-form","status":"pending","kind":"behavior"},
+{"id":"bhv-3","description":"After the rejected below-zero delta POST, GET /api/adjustments for the pair returns an empty list (no audit record)","ac_id":"AC4-negative-rejected-at-write-without-form","status":"pending","kind":"behavior"},
+{"id":"bhv-4","description":"POST /api/adjustments with a negative corrected quantity of -3 directly returns 422 whose detail names field 'quantity'","ac_id":"AC4-negative-rejected-at-write-without-form","status":"pending","kind":"behavior"},
+{"id":"bhv-5","description":"After the rejected negative-quantity POST, the stock record still has quantity 7 and GET /api/adjustments for the pair returns an empty list","ac_id":"AC4-negative-rejected-at-write-without-form","status":"pending","kind":"behavior"}
+]

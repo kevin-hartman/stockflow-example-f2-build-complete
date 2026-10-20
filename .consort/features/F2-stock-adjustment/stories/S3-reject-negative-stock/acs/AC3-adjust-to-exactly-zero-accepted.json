@@ -1,0 +1,22 @@
+{
+  "id": "AC3-adjust-to-exactly-zero-accepted",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator submits the adjustment form with a delta of -7 and their name as the actor",
+  "then": "the adjustment is accepted with the normal confirmation, the quantity becomes 0, and an audit record is created",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The zero boundary breaks independently: an over-strict guard that rejects any result <= 0 still passes AC1 and AC2 while wrongly rejecting a legitimate draw-down to zero."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E zero-boundary round-trip: AdjustmentService's guard is strictly result < 0, so delta -7 on 7 is accepted, sets quantity 0 and inserts one audit row (prior 7, new 0) in one commit (PI13); the client renders adjust-success from the real 201 and adjust-current-qty shows 0. Backend accept pinned by NFR2's zero clause; Playwright against the live API on the paired branch.",
+  "ui_seams": [
+    "adjust-mode-delta",
+    "field-delta",
+    "adjust-success",
+    "adjust-current-qty",
+    "adjust-audit",
+    "adjust-audit-row-<id>"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

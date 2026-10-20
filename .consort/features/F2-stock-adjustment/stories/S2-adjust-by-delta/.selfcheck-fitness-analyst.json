@@ -1,0 +1,10 @@
+[
+  {
+    "id": "fit-1",
+    "description": "After POST /api/adjustments with delta +5 on a (sku, location) at quantity 7, exactly one stock_records row exists for that pair carrying quantity 12, verified directly against the paired branch database scoped to the test's own per-run-unique pair",
+    "ac_id": "AC1-positive-delta-increases-level",
+    "status": "pending",
+    "kind": "fitness",
+    "nfr_id": "NFR3-adjust-addresses-existing-pair"
+  }
+]

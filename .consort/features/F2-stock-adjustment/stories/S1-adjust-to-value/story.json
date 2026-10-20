@@ -1,0 +1,1 @@
+{"id":"S1-adjust-to-value","asA":"warehouse team member","iWantTo":"set a SKU's stock at a location to a corrected value via the adjustment form, with an immutable audit record of when and who","soThat":"the system matches the shelf count","requires_e2e":true}

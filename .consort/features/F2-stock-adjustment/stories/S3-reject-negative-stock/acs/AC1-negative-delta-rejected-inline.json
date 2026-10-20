@@ -1,0 +1,18 @@
+{
+  "id": "AC1-negative-delta-rejected-inline",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator submits the adjustment form with a delta of -10 and their name as the actor",
+  "then": "the adjustment is rejected with an inline error next to the delta field that names the field (for example 'quantity would go below zero'), never a generic 'bad request'; the quantity stays 7 and no audit record is created",
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server contract: AdjustPage POSTs delta -10 to /api/adjustments; AdjustmentService (app/services/adjustment.py) reads the row-locked prior 7, finds prior + delta < 0 and rejects before any write with the 422 field 'delta' envelope, which the client maps to the inline field-delta-error ('quantity would go below zero'), never a generic form-error. Quantity stays 7 and no audit row exists (PI13); Playwright against the live API on the paired branch, so a client-only check cannot pass it alone.",
+  "ui_seams": [
+    "adjust-mode-delta",
+    "field-delta",
+    "field-delta-error",
+    "adjust-current-qty",
+    "adjust-audit",
+    "adjust-success"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

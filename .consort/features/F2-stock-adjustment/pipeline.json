@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "feature_id": "F2-stock-adjustment",
+  "stories": {
+    "S1-adjust-to-value": {
+      "status": "ready",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T13:54:15.082Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T13:54:15.082Z"
+      }
+    },
+    "S2-adjust-by-delta": {
+      "status": "ready",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T13:54:41.404Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T13:54:41.404Z"
+      }
+    },
+    "S3-reject-negative-stock": {
+      "status": "ready",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T13:55:05.218Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T13:55:05.218Z"
+      }
+    }
+  },
+  "build_queue": [
+    "S1-adjust-to-value",
+    "S2-adjust-by-delta",
+    "S3-reject-negative-stock"
+  ],
+  "build_active": null
+}

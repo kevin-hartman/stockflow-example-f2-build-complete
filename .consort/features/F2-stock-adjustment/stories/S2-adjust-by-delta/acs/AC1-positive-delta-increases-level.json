@@ -1,0 +1,20 @@
+{
+  "id": "AC1-positive-delta-increases-level",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator opens the adjustment form for that pair, chooses to adjust by a delta, enters +5 and their name as the actor, and submits",
+  "then": "the operator lands on a confirmation (or green inline flash) for the adjustment, and viewing that (sku, location) afterwards shows quantity 12",
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server round-trip: AdjustPage (client/) switches adjust-mode to delta and POSTs {sku, location, delta:+5, actor} to /api/adjustments; app/routes/adjustments.py validates and calls AdjustmentService.adjust_by_delta (app/services/adjustment.py), which locks the stock_records row via app/repositories, sets quantity = prior + delta and writes the audit row in one commit (PI13). The client renders adjust-success from the real 201 and the SKU detail then shows 12; Playwright against the live API on the paired branch, with NFR3's delta clause pinning one row at 12.",
+  "ui_seams": [
+    "adjust-mode",
+    "adjust-mode-delta",
+    "field-delta",
+    "adjust-delta-preview",
+    "field-actor",
+    "adjust-submit",
+    "adjust-success",
+    "adjust-current-qty"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

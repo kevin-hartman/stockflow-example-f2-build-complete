@@ -1,0 +1,8 @@
+[
+{"id":"cmp-1","description":"AdjustForm rendered for an existing (sku, location) pair shows its current quantity 7 read-only in the adjust-current-qty seam","ac_id":"AC1-form-sets-corrected-level","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"},
+{"id":"cmp-2","description":"AdjustForm renders every field (field-sku, field-location, field-quantity, field-actor) with a visible persistent field__label","ac_id":"AC1-form-sets-corrected-level","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"},
+{"id":"cmp-3","description":"AdjustForm renders the adjust-success confirmation naming sku, location, prior quantity 7 to new quantity 4 and actor after a real submit","ac_id":"AC1-form-sets-corrected-level","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"},
+{"id":"cmp-4","description":"AdjustForm renders field-actor-error naming 'Your name' on a field--error actor field when the actor is left empty","ac_id":"AC4-actor-required","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"},
+{"id":"cmp-5","description":"AdjustForm still shows adjust-current-qty as 7 after the empty-actor submit is rejected","ac_id":"AC4-actor-required","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"},
+{"id":"cmp-6","description":"AdjustForm renders the adjust-audit-empty state with no audit row after the empty-actor submit is rejected","ac_id":"AC4-actor-required","status":"pending","kind":"component","scenario_file":"client/tests/components/AdjustForm.test.tsx"}
+]

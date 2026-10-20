@@ -1,0 +1,14 @@
+{
+  "id": "AC3-audit-record-unmodifiable",
+  "status": "draft",
+  "given": "an existing adjustment audit record",
+  "when": "any attempt is made to edit or delete that audit record after the fact",
+  "then": "the attempt is rejected and the audit record remains retrievable with its original values unchanged",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "An audit record can be correctly written (AC2 green) while still being editable or deletable afterwards; immutability is an independently breakable outcome."
+  },
+  "layer": "API",
+  "architectural_notes": "API + DB immutability: app/routes/adjustments.py registers only GET and POST, so PUT/PATCH/DELETE on /api/adjustments[/{id}] return 405, and AdjustmentRepository exposes no update/delete; a BEFORE UPDATE OR DELETE trigger on stock_adjustments (PI12) rejects direct mutation on the branch. Verified by pytest-bdd re-reading the row via GET /api/adjustments and raw SQL against the paired branch.",
+  "api_contract_id": "EP7-list-adjustments"
+}

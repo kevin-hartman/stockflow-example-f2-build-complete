@@ -1,0 +1,22 @@
+{
+  "id": "AC1-form-sets-corrected-level",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator opens the adjustment form for that pair, whose fields carry visible persistent labels, enters a corrected quantity of 4 and their name as the actor, and submits",
+  "then": "the operator lands on a confirmation (or green inline flash) for the adjustment, and viewing that (sku, location) afterwards shows quantity 4",
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server round-trip: AdjustPage (client/) submits the form to POST /api/adjustments; app/routes/adjustments.py validates and calls AdjustmentService.adjust_to_value, which locks the stock_records row via the repository, updates quantity and writes the audit row in one commit. The client renders adjust-success from the real 201 response and the SKU detail (EP5) then shows 4; verified by Playwright against the live API on the paired branch.",
+  "ui_seams": [
+    "adjust-form",
+    "field-sku",
+    "field-location",
+    "field-quantity",
+    "field-actor",
+    "adjust-current-qty",
+    "adjust-submit",
+    "adjust-success",
+    "toast-success",
+    "sku-qty-<loc>"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

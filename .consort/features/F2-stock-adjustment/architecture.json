@@ -1,0 +1,272 @@
+{
+  "feature_id": "F2-stock-adjustment",
+  "service_backed": true,
+  "layers": [
+    {
+      "name": "routes",
+      "role": "boundary",
+      "module": "app/routes/",
+      "may_import": [
+        "service"
+      ],
+      "renders_via": "react"
+    },
+    {
+      "name": "services",
+      "role": "service",
+      "module": "app/services/",
+      "may_import": [
+        "repository",
+        "models"
+      ]
+    },
+    {
+      "name": "repositories",
+      "role": "repository",
+      "module": "app/repositories/",
+      "may_import": [
+        "models",
+        "infrastructure"
+      ]
+    },
+    {
+      "name": "models",
+      "role": "models",
+      "module": "app/models/",
+      "may_import": [
+        "infrastructure"
+      ]
+    },
+    {
+      "name": "database",
+      "role": "infrastructure",
+      "module": "app/database.py",
+      "may_import": []
+    }
+  ],
+  "api_contracts": [
+    {
+      "id": "EP6-adjust-stock",
+      "method": "POST",
+      "path": "/api/adjustments",
+      "shape": "object",
+      "item": "request body {sku: string (required, trimmed, non-empty), location: string (required, trimmed, non-empty), EXACTLY ONE of quantity: integer >= 0 (set-to-value mode, S1) OR delta: non-zero signed integer (adjust-by-delta mode, S2-adjust-by-delta; the service computes new_quantity = prior_quantity + delta against the row-locked current quantity), actor: string (required, trimmed, non-empty)}; response 201 is the written StockAdjustment {id: integer, sku: string, location: string, prior_quantity: integer, new_quantity: integer, actor: string, adjusted_at: string (ISO-8601 UTC, server-stamped), delta: integer (derived new_quantity - prior_quantity, never stored separately)}. The stock_records quantity update and the audit insert commit in ONE transaction. Validation failure is 422 {detail: [{field: 'sku'|'location'|'quantity'|'delta'|'actor', message: string}]} naming the offending field; nothing changes, no audit row. Negative-stock guard (S3-reject-negative-stock): a negative quantity is 422 field 'quantity'; a delta whose prior + delta < 0 (evaluated by the service against the row-locked current quantity) is 422 field 'delta', message 'quantity would go below zero'; a resulting quantity of exactly 0 is accepted (201). 404 {detail: string} when no stock record exists for the (sku, location) pair (an adjustment never creates a record).",
+      "story": "S1-adjust-to-value"
+    },
+    {
+      "id": "EP7-list-adjustments",
+      "method": "GET",
+      "path": "/api/adjustments",
+      "query": [
+        "sku",
+        "location"
+      ],
+      "shape": "list",
+      "item": "bare JSON array of StockAdjustment {id: integer, sku: string, location: string, prior_quantity: integer, new_quantity: integer, actor: string, adjusted_at: string (ISO-8601 UTC), delta: integer (derived new_quantity - prior_quantity)} for the (sku, location) pair, newest first (adjusted_at desc, id desc); [] when none. Read-only: no PUT/PATCH/DELETE route exists on /api/adjustments or /api/adjustments/{id} (a mutation attempt is 405).",
+      "story": "S1-adjust-to-value"
+    }
+  ],
+  "persistence_invariants": [
+    {
+      "id": "PI8-adjustment-columns-not-null",
+      "type": "not_null",
+      "table": "stock_adjustments",
+      "brief": "stock_adjustments.sku, location, prior_quantity, new_quantity, actor and adjusted_at are all NOT NULL (adjusted_at server-defaulted to now()); an insert missing any is rejected by the DB."
+    },
+    {
+      "id": "PI9-actor-non-blank",
+      "type": "check",
+      "table": "stock_adjustments",
+      "brief": "A CHECK (length(btrim(actor)) > 0) rejects an empty or whitespace-only actor at the DB level, even when the service is bypassed."
+    },
+    {
+      "id": "PI10-new-quantity-non-negative",
+      "type": "check",
+      "table": "stock_adjustments",
+      "brief": "A CHECK (new_quantity >= 0 AND prior_quantity >= 0) rejects a negative quantity in an audit row at the DB level."
+    },
+    {
+      "id": "PI11-adjustment-stock-record-fk",
+      "type": "foreign_key",
+      "table": "stock_adjustments",
+      "brief": "A composite FOREIGN KEY (sku, location) REFERENCES stock_records (sku, location) ON DELETE RESTRICT: an audit row for a non-existent pair is rejected, and a stock_records row with audit history cannot be deleted out from under it."
+    },
+    {
+      "id": "PI12-adjustment-immutable",
+      "type": "check",
+      "table": "stock_adjustments",
+      "brief": "A BEFORE UPDATE OR DELETE trigger on stock_adjustments raises, so a direct UPDATE or DELETE of an audit row on the paired branch is rejected and the row keeps its original values."
+    },
+    {
+      "id": "PI13-adjust-atomic",
+      "type": "transactional",
+      "table": "stock_adjustments",
+      "brief": "The stock_records quantity update and the stock_adjustments insert commit in one transaction: a failure of either (e.g. the audit insert violating PI9) leaves stock_records.quantity unchanged and no audit row."
+    },
+    {
+      "id": "PI14-create-stock-adjustments-reversible",
+      "type": "migration_reversible",
+      "table": "stock_adjustments",
+      "brief": "Initial create_table: after downgrade to this migration's down_revision then upgrade head, stock_adjustments and its columns, CHECKs, composite FK and immutability trigger are present again (schema recreated; no row survival is claimed for the initial creation)."
+    },
+    {
+      "id": "PI15-stock-records-survive-adjustments-migration",
+      "type": "migration_reversible",
+      "table": "stock_records",
+      "brief": "Additive migration on the PRE-EXISTING stock_records schema: stock_records rows present before upgrade to the create_stock_adjustments revision persist unchanged after the upgrade and after a downgrade to its down_revision."
+    }
+  ],
+  "access_patterns": [
+    {
+      "id": "AP3-adjustments-by-pair",
+      "table": "stock_adjustments",
+      "columns": [
+        "sku",
+        "location",
+        "adjusted_at"
+      ],
+      "story": "S1-adjust-to-value",
+      "brief": "SELECT ... FROM stock_adjustments WHERE sku = :sku AND location = :location ORDER BY adjusted_at DESC, id DESC (EP7, the adjust-audit list); a new table with no index beyond its PK."
+    }
+  ],
+  "nfrs": [
+    {
+      "id": "NFR1-adjustment-audit-and-migration-safety",
+      "brief_ref": "R1",
+      "tier": "product",
+      "applies_to": "F2-stock-adjustment",
+      "requirement": "Existing stock data survives the additive stock_adjustments migration, and every adjustment keeps an unmodifiable timestamp and actor.",
+      "fitness_functions": [
+        {
+          "clause": "stock_records rows present before upgrade to the create_stock_adjustments revision persist unchanged after the upgrade and after a downgrade to its down_revision.",
+          "realized_by": [
+            "AC2-audit-record-captures-when-and-who"
+          ]
+        },
+        {
+          "clause": "The stock_adjustments migration is reversible: downgrade to its down_revision then upgrade head recreates stock_adjustments with its columns, CHECKs, composite FK and immutability trigger.",
+          "realized_by": [
+            "AC2-audit-record-captures-when-and-who"
+          ]
+        },
+        {
+          "clause": "A raw insert into stock_adjustments with a NULL or blank actor, or a NULL adjusted_at, is rejected by the DB on the paired branch.",
+          "realized_by": [
+            "AC2-audit-record-captures-when-and-who"
+          ]
+        },
+        {
+          "clause": "A direct UPDATE or DELETE of a stock_adjustments row on the paired branch is rejected by the immutability trigger and the row keeps its original values.",
+          "realized_by": [
+            "AC3-audit-record-unmodifiable"
+          ]
+        },
+        {
+          "clause": "POST /api/adjustments with an empty actor returns 422 naming the 'actor' field, leaves stock_records.quantity unchanged and writes no stock_adjustments row.",
+          "realized_by": [
+            "AC4-actor-required"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "fitness_function": "stock_records rows present before upgrade to the create_stock_adjustments revision persist unchanged after the upgrade and after a downgrade to its down_revision. AND The stock_adjustments migration is reversible: downgrade to its down_revision then upgrade head recreates stock_adjustments with its columns, CHECKs, composite FK and immutability trigger. AND A raw insert into stock_adjustments with a NULL or blank actor, or a NULL adjusted_at, is rejected by the DB on the paired branch. AND A direct UPDATE or DELETE of a stock_adjustments row on the paired branch is rejected by the immutability trigger and the row keeps its original values. AND POST /api/adjustments with an empty actor returns 422 naming the 'actor' field, leaves stock_records.quantity unchanged and writes no stock_adjustments row."
+    },
+    {
+      "id": "NFR2-adjustment-never-negative",
+      "brief_ref": "R2",
+      "tier": "product",
+      "applies_to": "F2-stock-adjustment",
+      "requirement": "An adjustment never leaves a stored negative quantity. The pick-overcommit half of R2 is N/A for F2 (no pick/allocation) and stays with the pick feature (F1 OD3, still deferred for that half). S3-reject-negative-stock enforces the rejection at the service write path (independent of client checks) with a field-named 422.",
+      "fitness_functions": [
+        {
+          "clause": "A direct insert into stock_adjustments with new_quantity < 0 on the paired branch is rejected by the CHECK constraint (stock_records' CHECK (quantity >= 0) from F1 still holds under the adjust path).",
+          "realized_by": [
+            "AC2-audit-record-captures-when-and-who"
+          ]
+        },
+        {
+          "clause": "POST /api/adjustments with delta -10 on quantity 7 (bypassing the form) returns 422 naming field 'delta', leaves stock_records.quantity at 7 and writes no stock_adjustments row.",
+          "realized_by": [
+            "AC4-negative-rejected-at-write-without-form"
+          ]
+        },
+        {
+          "clause": "POST /api/adjustments with quantity -2 returns 422 naming field 'quantity', leaves stock_records.quantity at 7 and writes no stock_adjustments row.",
+          "realized_by": [
+            "AC4-negative-rejected-at-write-without-form"
+          ]
+        },
+        {
+          "clause": "POST /api/adjustments with delta -7 on quantity 7 returns 201, stock_records.quantity becomes 0 and exactly one stock_adjustments row (prior 7, new 0) is written.",
+          "realized_by": [
+            "AC3-adjust-to-exactly-zero-accepted"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "fitness_function": "A direct insert into stock_adjustments with new_quantity < 0 on the paired branch is rejected by the CHECK constraint (stock_records' CHECK (quantity >= 0) from F1 still holds under the adjust path). AND POST /api/adjustments with delta -10 on quantity 7 (bypassing the form) returns 422 naming field 'delta', leaves stock_records.quantity at 7 and writes no stock_adjustments row. AND POST /api/adjustments with quantity -2 returns 422 naming field 'quantity', leaves stock_records.quantity at 7 and writes no stock_adjustments row. AND POST /api/adjustments with delta -7 on quantity 7 returns 201, stock_records.quantity becomes 0 and exactly one stock_adjustments row (prior 7, new 0) is written."
+    },
+    {
+      "id": "NFR3-adjust-addresses-existing-pair",
+      "brief_ref": "R3",
+      "tier": "product",
+      "applies_to": "F2-stock-adjustment",
+      "requirement": "An adjustment addresses exactly one existing (sku, location) record in place; it never creates a duplicate or a new record.",
+      "fitness_functions": [
+        {
+          "clause": "After POST /api/adjustments sets a (sku, location) from 7 to 4, exactly one stock_records row exists for that pair carrying quantity 4.",
+          "realized_by": [
+            "AC1-form-sets-corrected-level"
+          ]
+        },
+        {
+          "clause": "After POST /api/adjustments with delta +5 on a (sku, location) at quantity 7, exactly one stock_records row exists for that pair carrying quantity 12.",
+          "realized_by": [
+            "AC1-positive-delta-increases-level"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "fitness_function": "After POST /api/adjustments sets a (sku, location) from 7 to 4, exactly one stock_records row exists for that pair carrying quantity 4. AND After POST /api/adjustments with delta +5 on a (sku, location) at quantity 7, exactly one stock_records row exists for that pair carrying quantity 12."
+    },
+    {
+      "id": "NFR4-real-branch-integration-tests",
+      "brief_ref": "R4",
+      "tier": "platform",
+      "applies_to": "F2-stock-adjustment",
+      "requirement": "Integration tests run against the paired Lakebase branch (DATABASE_URL, database databricks_postgres), never a mock, stub, SQLite or in-memory substitute.",
+      "fitness_function": "The integration test session fixture asserts the engine dialect is postgresql and its URL is the DATABASE_URL of the paired branch, failing fast if a sqlite/in-memory or mocked session is configured.",
+      "hil_status": "accepted"
+    },
+    {
+      "id": "NFR5-spa-json-boundary",
+      "brief_ref": "R5",
+      "tier": "platform",
+      "applies_to": "F2-stock-adjustment",
+      "requirement": "The adjust form is part of the React SPA under client/; /api/adjustments returns JSON only and the client reconciles the adjusted row against the server response without a full-page reload.",
+      "fitness_function": "Every /api/adjustments response is application/json (never text/html), and a Playwright run navigating navbar -> /adjust -> submit keeps the same document (no full page reload).",
+      "hil_status": "accepted"
+    }
+  ],
+  "open_decisions": [
+    {
+      "id": "OD1-adjustment-audit-home",
+      "question": "Where do R1's unmodifiable adjustment timestamp + actor live (deferred from F1 OD3)?",
+      "decision_status": "resolved",
+      "resolved_by_story": "S1-adjust-to-value",
+      "resolution": "A dedicated append-only stock_adjustments table (FK to stock_records (sku, location)), written in the same transaction as the quantity update, with DB-level NOT NULL/CHECK on actor + adjusted_at and an UPDATE/DELETE-rejecting trigger; the API exposes no mutation route. S2-adjust-by-delta reuses the same table (prior/new quantity recorded either way). Consistent with F1: adjustments only touch existing records, never create one."
+    },
+    {
+      "id": "OD-scope-adjust-location-options",
+      "question": "field-location (adjust) lists 'all locations holding a record for the chosen SKU, incl. qty-0': reuse EP3 (all locations) + EP2 404 -> form-error, or add a sku-scoped locations endpoint?",
+      "decision_status": "open"
+    },
+    {
+      "id": "OD2-delta-audit-storage",
+      "question": "Is the audit delta stored as its own column or derived as new_quantity - prior_quantity?",
+      "decision_status": "resolved",
+      "resolved_by_story": "S2-adjust-by-delta",
+      "resolution": "Derived in the service/response (delta = new_quantity - prior_quantity) for every audit row; no schema change to stock_adjustments, so S1's PI8-PI15 stand unchanged and the delta can never disagree with prior/new."
+    }
+  ]
+}

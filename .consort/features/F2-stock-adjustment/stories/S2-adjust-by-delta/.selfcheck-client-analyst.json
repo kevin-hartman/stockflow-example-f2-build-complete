@@ -1,0 +1,4 @@
+[
+{"id":"cli-1","description":"Playwright e2e at /adjust against the live DB: operator seeds a uniquely-keyed (crypto.randomUUID()-suffixed sku) record at quantity 7, switches adjust-mode-delta, enters +5 in field-delta and an actor in field-actor, submits via adjust-submit, sees adjust-success, and the SKU detail then shows quantity 12","ac_id":"AC1-positive-delta-increases-level","status":"pending","kind":"client","scenario_file":"client/tests/e2e/adjust-delta-increase.spec.ts"},
+{"id":"cli-2","description":"Playwright e2e at /adjust against the live DB: operator on a uniquely-keyed (crypto.randomUUID()-suffixed sku) record at quantity 7 selects adjust-mode-delta, enters -3 in field-delta and an actor, submits via adjust-submit, sees adjust-success, and the SKU detail then shows quantity 4","ac_id":"AC2-negative-delta-decreases-level","status":"pending","kind":"client","scenario_file":"client/tests/e2e/adjust-delta-decrease.spec.ts"}
+]

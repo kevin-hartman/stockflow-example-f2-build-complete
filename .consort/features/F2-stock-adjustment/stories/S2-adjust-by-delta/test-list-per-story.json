@@ -1,0 +1,82 @@
+{
+  "feature_id": "F2-stock-adjustment",
+  "story_id": "S2-adjust-by-delta",
+  "ordered_for": "design-momentum",
+  "items": [
+    {
+      "id": "T39",
+      "description": "After POST /api/adjustments with delta +5 on a (sku, location) at quantity 7, exactly one stock_records row exists for that pair carrying quantity 12, verified directly against the paired branch database scoped to the test's own per-run-unique pair",
+      "ac_id": "AC1-positive-delta-increases-level",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR3-adjust-addresses-existing-pair"
+    },
+    {
+      "id": "T40",
+      "description": "The delta preview component renders current quantity 7 and resulting quantity 12 for a +5 delta on a real stock record, exposed at the adjust-delta-preview seam",
+      "ac_id": "AC1-positive-delta-increases-level",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustDeltaPreview.test.tsx"
+    },
+    {
+      "id": "T41",
+      "description": "Playwright e2e at /adjust against the live DB: operator seeds a uniquely-keyed (crypto.randomUUID()-suffixed sku) record at quantity 7, switches adjust-mode-delta, enters +5 in field-delta and an actor in field-actor, submits via adjust-submit, sees adjust-success, and the SKU detail then shows quantity 12",
+      "ac_id": "AC1-positive-delta-increases-level",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-delta-increase.spec.ts"
+    },
+    {
+      "id": "T44",
+      "description": "POST /api/adjustments with delta +5 on a uniquely-keyed (sku, location) at quantity 7, then GET /api/adjustments for the pair, returns exactly one audit record",
+      "ac_id": "AC3-delta-audit-records-resulting-level",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T45",
+      "description": "The single audit record from a +5 delta on quantity 7 shows prior_quantity 7, new_quantity 12 (the resulting level, not the delta) and derived delta 5",
+      "ac_id": "AC3-delta-audit-records-resulting-level",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T46",
+      "description": "The audit record from a delta adjustment shows the actor the caller entered and a server-stamped ISO-8601 UTC adjusted_at",
+      "ac_id": "AC3-delta-audit-records-resulting-level",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T47",
+      "description": "POST /api/adjustments with delta 0 returns 422 naming the 'delta' field and GET /api/adjustments for the pair stays empty",
+      "ac_id": "AC3-delta-audit-records-resulting-level",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T48",
+      "description": "POST /api/adjustments with a delta and an empty actor returns 422 naming the 'actor' field and writes no audit record",
+      "ac_id": "AC3-delta-audit-records-resulting-level",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T42",
+      "description": "The delta preview component renders current quantity 7 and resulting quantity 4 for a -3 delta on a real stock record, exposed at the adjust-delta-preview seam",
+      "ac_id": "AC2-negative-delta-decreases-level",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustDeltaPreview.test.tsx"
+    },
+    {
+      "id": "T43",
+      "description": "Playwright e2e at /adjust against the live DB: operator on a uniquely-keyed (crypto.randomUUID()-suffixed sku) record at quantity 7 selects adjust-mode-delta, enters -3 in field-delta and an actor, submits via adjust-submit, sees adjust-success, and the SKU detail then shows quantity 4",
+      "ac_id": "AC2-negative-delta-decreases-level",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-delta-decrease.spec.ts"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "AC4-negative-rejected-at-write-without-form",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "an adjustment that would take it to -3 is submitted directly to the system, bypassing the form's own checks",
+  "then": "the adjustment is rejected with an error naming the offending field, the quantity stays 7 (never stored negative), and no audit record is created",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The inline form errors (AC1/AC2) can pass on a client-side check alone while the write path still stores a negative; enforcement at write time is independently breakable."
+  },
+  "layer": "API",
+  "architectural_notes": "API write rule: the never-negative guard lives in AdjustmentService (app/services/adjustment.py), not the client, so a direct POST /api/adjustments with delta or quantity that would land at -3 returns 422 naming the offending field ('delta' or 'quantity') before any repository write. Quantity stays 7 and no stock_adjustments row is written; stock_records CHECK (quantity >= 0) and PI10 are the DB backstops. pytest-bdd direct HTTP calls against the paired branch, covering NFR2's write-path clauses.",
+  "api_contract_id": "EP6-adjust-stock"
+}

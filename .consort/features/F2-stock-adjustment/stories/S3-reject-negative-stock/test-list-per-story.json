@@ -1,0 +1,154 @@
+{
+  "feature_id": "F2-stock-adjustment",
+  "story_id": "S3-reject-negative-stock",
+  "ordered_for": "design-momentum",
+  "items": [
+    {
+      "id": "T53",
+      "description": "On the paired branch POST /api/adjustments with delta -7 on a per-run-unique (sku, location) at quantity 7 returns 201 and the stock_records quantity read back is 0",
+      "ac_id": "AC3-adjust-to-exactly-zero-accepted",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T54",
+      "description": "On the paired branch the accepted delta -7 POST writes exactly one stock_adjustments row for the test's own (sku, location) with prior_quantity 7 and new_quantity 0",
+      "ac_id": "AC3-adjust-to-exactly-zero-accepted",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T55",
+      "description": "AdjustPage rendered alone against the real API renders adjust-success and adjust-current-qty 0 with one adjust-audit row when a delta of -7 on a seeded quantity of 7 is accepted",
+      "ac_id": "AC3-adjust-to-exactly-zero-accepted",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustPage.negative-stock.test.tsx"
+    },
+    {
+      "id": "T56",
+      "description": "Playwright e2e navigating /adjust?sku=&location= in the deployed app: seed a crypto.randomUUID()-suffixed sku at qty 7 via /file, choose Adjust by delta, submit -7 with an actor, and see adjust-success, adjust-current-qty 0 and one new adjust-audit-row-<id> (prior 7, new 0) against the live DB",
+      "ac_id": "AC3-adjust-to-exactly-zero-accepted",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-to-zero.spec.ts"
+    },
+    {
+      "id": "T57",
+      "description": "POST /api/adjustments with a delta taking quantity 7 to -3 directly returns 422 whose detail names field 'delta' (message 'quantity would go below zero')",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T58",
+      "description": "After the rejected below-zero delta POST, GET of the stock record still returns quantity 7",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T59",
+      "description": "After the rejected below-zero delta POST, GET /api/adjustments for the pair returns an empty list (no audit record)",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T60",
+      "description": "POST /api/adjustments with a negative corrected quantity of -3 directly returns 422 whose detail names field 'quantity'",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T61",
+      "description": "After the rejected negative-quantity POST, the stock record still has quantity 7 and GET /api/adjustments for the pair returns an empty list",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T62",
+      "description": "AdjustmentService called with its required injected session, prior quantity 7 and delta -10, rejects with a validation error naming field 'delta' (message 'quantity would go below zero') and the repository write (quantity update and audit insert) is patched and asserted never called",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T63",
+      "description": "On the paired branch a direct POST /api/adjustments with delta -10 on a per-run-unique (sku, location) at quantity 7 returns 422 naming field 'delta' and the stock_records quantity read back is still 7",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T64",
+      "description": "On the paired branch the rejected delta -10 POST writes no stock_adjustments row for the test's own (sku, location) (row-count delta 0)",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T65",
+      "description": "AdjustmentService called with its required injected session and a set-to-value quantity of -2 rejects with a validation error naming field 'quantity' and the repository write is patched and asserted never called",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T66",
+      "description": "On the paired branch a direct POST /api/adjustments with quantity -2 on a per-run-unique (sku, location) at quantity 7 returns 422 naming field 'quantity' and the stock_records quantity read back is still 7",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T67",
+      "description": "On the paired branch the rejected quantity -2 POST writes no stock_adjustments row for the test's own (sku, location) (row-count delta 0)",
+      "ac_id": "AC4-negative-rejected-at-write-without-form",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T49",
+      "description": "AdjustPage rendered alone against the real API shows the field-delta-error 'quantity would go below zero' (field--error class) next to the delta field when a delta of -10 on a seeded quantity of 7 is rejected, with adjust-current-qty still 7",
+      "ac_id": "AC1-negative-delta-rejected-inline",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustPage.negative-stock.test.tsx"
+    },
+    {
+      "id": "T50",
+      "description": "Playwright e2e navigating /adjust?sku=&location= in the deployed app: seed a crypto.randomUUID()-suffixed sku at qty 7 via /file, choose Adjust by delta, submit -10 with an actor, and see the inline field-delta-error ('quantity would go below zero') with adjust-current-qty still 7, no adjust-audit-row and no adjust-success against the live DB",
+      "ac_id": "AC1-negative-delta-rejected-inline",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-reject-negative-delta.spec.ts"
+    },
+    {
+      "id": "T51",
+      "description": "AdjustPage rendered alone against the real API shows the field-quantity-error (field--error class) naming the corrected quantity field when a corrected value of -2 on a seeded quantity of 7 is rejected, with adjust-current-qty still 7",
+      "ac_id": "AC2-negative-corrected-value-rejected-inline",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustPage.negative-stock.test.tsx"
+    },
+    {
+      "id": "T52",
+      "description": "Playwright e2e navigating /adjust?sku=&location= in the deployed app: seed a crypto.randomUUID()-suffixed sku at qty 7 via /file, choose Set to value, submit corrected quantity -2 with an actor, and see the inline field-quantity-error naming 'Corrected quantity' with adjust-current-qty still 7 and no adjust-audit-row against the live DB",
+      "ac_id": "AC2-negative-corrected-value-rejected-inline",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-reject-negative-value.spec.ts"
+    }
+  ]
+}

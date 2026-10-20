@@ -1,0 +1,22 @@
+{"feature_id":"F2-stock-adjustment",
+"tables":[{"name":"stock_adjustments","columns":[
+{"name":"id","type":"bigint generated always as identity","nullable":false,"description":"Surrogate key; tiebreak for ordering"},
+{"name":"sku","type":"text","nullable":false,"description":"PI8; FK part (PI11)"},
+{"name":"location","type":"text","nullable":false,"description":"PI8; FK part (PI11)"},
+{"name":"prior_quantity","type":"integer","nullable":false,"description":"PI8, PI10"},
+{"name":"new_quantity","type":"integer","nullable":false,"description":"PI8, PI10"},
+{"name":"actor","type":"text","nullable":false,"description":"PI8, PI9"},
+{"name":"adjusted_at","type":"timestamptz","nullable":false,"default":"now()","description":"PI8"}],
+"primary_key":["id"],
+"foreign_keys":[{"columns":["sku","location"],"references_table":"stock_records","references_columns":["sku","location"],"on_delete":"restrict"}],
+"checks":[{"name":"ck_stock_adjustments_actor_non_blank","expression":"length(btrim(actor)) > 0"},
+{"name":"ck_stock_adjustments_quantities_non_negative","expression":"new_quantity >= 0 AND prior_quantity >= 0"}],
+"indexes":[{"name":"ix_stock_adjustments_pair_adjusted_at","columns":["sku","location","adjusted_at","id"],"unique":false}]}],
+"schema_changes":[
+{"id":"SC1-create-stock-adjustments","story_id":"S1-adjust-to-value","kind":"create_table","table":"stock_adjustments","detail":"Create stock_adjustments with NOT NULL columns, adjusted_at default now(), identity PK.","migration_note":"Additive; downgrade drops table. stock_records untouched (PI15)."},
+{"id":"SC2-add-adjustments-checks","story_id":"S1-adjust-to-value","kind":"add_constraint","table":"stock_adjustments","detail":"CHECK ck_stock_adjustments_actor_non_blank and ck_stock_adjustments_quantities_non_negative.","migration_note":"Same revision as SC1."},
+{"id":"SC3-add-adjustments-stock-record-fk","story_id":"S1-adjust-to-value","kind":"add_constraint","table":"stock_adjustments","detail":"FOREIGN KEY (sku, location) REFERENCES stock_records (sku, location) ON DELETE RESTRICT (backed by stock_records unique(sku,location)).","migration_note":"Same revision as SC1."},
+{"id":"SC4-add-adjustments-immutability-trigger","story_id":"S1-adjust-to-value","kind":"add_constraint","table":"stock_adjustments","detail":"plpgsql function stock_adjustments_immutable() RAISE EXCEPTION; trigger trg_stock_adjustments_immutable BEFORE UPDATE OR DELETE FOR EACH ROW.","migration_note":"Downgrade drops trigger and function before table."},
+{"id":"SC5-add-adjustments-pair-index","story_id":"S1-adjust-to-value","kind":"add_index","table":"stock_adjustments","detail":"Index ix_stock_adjustments_pair_adjusted_at on (sku, location, adjusted_at, id) for AP3.","migration_note":"Same revision as SC1."}],
+"realizes_invariants":["PI8-adjustment-columns-not-null","PI9-actor-non-blank","PI10-new-quantity-non-negative","PI11-adjustment-stock-record-fk","PI12-adjustment-immutable","PI13-adjust-atomic","PI14-create-stock-adjustments-reversible","PI15-stock-records-survive-adjustments-migration"],
+"addresses_access_patterns":["AP3-adjustments-by-pair"]}

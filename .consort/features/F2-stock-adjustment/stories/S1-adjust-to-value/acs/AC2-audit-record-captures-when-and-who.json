@@ -1,0 +1,14 @@
+{
+  "id": "AC2-audit-record-captures-when-and-who",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair",
+  "when": "the operator successfully adjusts its quantity to a corrected value",
+  "then": "exactly one adjustment audit record is retrievable for that adjustment, naming the sku, the location, the prior quantity, the new quantity, the time it happened, and the actor the operator entered",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The stock level can be updated correctly (AC1 green) while no audit record, or one missing the time or actor, is written."
+  },
+  "layer": "API",
+  "architectural_notes": "API write rule: AdjustmentService (app/services/adjustment.py) inserts exactly one StockAdjustment (app/models/stock_adjustment.py) carrying sku, location, prior_quantity (read under row lock), new_quantity, the caller-supplied actor and a server-stamped adjusted_at, in the same transaction as the quantity update (PI13); retrieved via GET /api/adjustments?sku=&location=. Audit is service-owned, persisted only by app/repositories/adjustment.py; DB NOT NULL/CHECK (PI8-PI10) and the FK (PI11) defend it; pytest-bdd against the paired branch.",
+  "api_contract_id": "EP7-list-adjustments"
+}

@@ -1,0 +1,7 @@
+[
+{"id":"bhv-1","description":"POST /api/adjustments with delta +5 on a uniquely-keyed (sku, location) at quantity 7, then GET /api/adjustments for the pair, returns exactly one audit record","ac_id":"AC3-delta-audit-records-resulting-level","status":"pending","kind":"behavior"},
+{"id":"bhv-2","description":"The single audit record from a +5 delta on quantity 7 shows prior_quantity 7, new_quantity 12 (the resulting level, not the delta) and derived delta 5","ac_id":"AC3-delta-audit-records-resulting-level","status":"pending","kind":"behavior"},
+{"id":"bhv-3","description":"The audit record from a delta adjustment shows the actor the caller entered and a server-stamped ISO-8601 UTC adjusted_at","ac_id":"AC3-delta-audit-records-resulting-level","status":"pending","kind":"behavior"},
+{"id":"bhv-4","description":"POST /api/adjustments with delta 0 returns 422 naming the 'delta' field and GET /api/adjustments for the pair stays empty","ac_id":"AC3-delta-audit-records-resulting-level","status":"pending","kind":"behavior"},
+{"id":"bhv-5","description":"POST /api/adjustments with a delta and an empty actor returns 422 naming the 'actor' field and writes no audit record","ac_id":"AC3-delta-audit-records-resulting-level","status":"pending","kind":"behavior"}
+]

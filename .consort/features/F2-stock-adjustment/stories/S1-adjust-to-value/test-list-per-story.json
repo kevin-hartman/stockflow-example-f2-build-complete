@@ -1,0 +1,303 @@
+{
+  "feature_id": "F2-stock-adjustment",
+  "story_id": "S1-adjust-to-value",
+  "ordered_for": "design-momentum",
+  "items": [
+    {
+      "id": "T17",
+      "description": "A raw INSERT into stock_adjustments with sku NULL is rejected by the NOT NULL constraint on the paired branch",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI8-adjustment-columns-not-null"
+    },
+    {
+      "id": "T18",
+      "description": "A raw INSERT into stock_adjustments with new_quantity below zero is rejected by ck_stock_adjustments_quantities_non_negative on the paired branch",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI10-new-quantity-non-negative",
+      "nfr_id": "NFR2-adjustment-never-negative"
+    },
+    {
+      "id": "T19",
+      "description": "A raw INSERT into stock_adjustments for a (sku, location) pair absent from stock_records is rejected by the composite foreign key on the paired branch",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI11-adjustment-stock-record-fk"
+    },
+    {
+      "id": "T21",
+      "description": "Downgrading to the create_stock_adjustments migration's own down_revision then upgrading head recreates stock_adjustments with its columns, CHECKs, composite FK and immutability trigger (marked @pytest.mark.migration, no relative downgrade)",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI14-create-stock-adjustments-reversible",
+      "schema_change_id": "SC1-create-stock-adjustments",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T22",
+      "description": "stock_records rows seeded with per-run-unique keys before upgrading to the create_stock_adjustments revision persist unchanged after the upgrade and after a downgrade to its down_revision (marked @pytest.mark.migration)",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI15-stock-records-survive-adjustments-migration",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T23",
+      "description": "The integration test session fixture asserts the engine dialect is postgresql and the URL is the paired branch DATABASE_URL, failing fast on sqlite, in-memory or mocked sessions",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR4-real-branch-integration-tests"
+    },
+    {
+      "id": "T7",
+      "description": "POST /api/adjustments for an existing (sku, location) at quantity 7 with quantity 4 and an actor returns 201 naming the sku, location, prior_quantity 7, new_quantity 4 and the entered actor",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T8",
+      "description": "After one successful adjustment, GET /api/adjustments?sku=&location= returns exactly one audit record for the pair with the prior quantity, new quantity and actor",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T9",
+      "description": "The audit record's adjusted_at is a server-stamped ISO-8601 UTC time falling between just before and just after the POST",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T10",
+      "description": "Two successive adjustments of the same pair yield two audit records listed newest first, the second with prior_quantity equal to the first's new_quantity",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T11",
+      "description": "Adjusting a pair does not return or list audit records belonging to a different (sku, location) pair",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T12",
+      "description": "POST /api/adjustments with an empty actor returns 422 whose detail names the 'actor' field",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T13",
+      "description": "POST /api/adjustments with a whitespace-only actor returns 422 whose detail names the 'actor' field",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T14",
+      "description": "POST /api/adjustments with the actor field omitted returns 422 whose detail names the 'actor' field",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T15",
+      "description": "After a rejected empty-actor POST, GET /api/adjustments for the pair returns [] so no audit record was created",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T16",
+      "description": "POST /api/adjustments for a (sku, location) with no stock record returns 404 and lists no audit record for that pair",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T20",
+      "description": "When the audit insert is forced to fail inside AdjustmentService.adjust_to_value (called with its injected session), stock_records.quantity is unchanged and no stock_adjustments row exists on the paired branch",
+      "ac_id": "AC2-audit-record-captures-when-and-who",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI13-adjust-atomic"
+    },
+    {
+      "id": "T27",
+      "description": "A direct UPDATE of a stock_adjustments row is rejected by the immutability trigger and the row keeps its original values on the paired branch",
+      "ac_id": "AC3-audit-record-unmodifiable",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI12-adjustment-immutable",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T24",
+      "description": "PUT on /api/adjustments/{id} for an existing audit record returns 405 and GET still returns the record with its original values",
+      "ac_id": "AC3-audit-record-unmodifiable",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T25",
+      "description": "PATCH on /api/adjustments/{id} for an existing audit record returns 405 and GET still returns the record with its original values",
+      "ac_id": "AC3-audit-record-unmodifiable",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T26",
+      "description": "DELETE on /api/adjustments/{id} for an existing audit record returns 405 and GET still returns the record with its original values",
+      "ac_id": "AC3-audit-record-unmodifiable",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T28",
+      "description": "Every /api/adjustments response (201, 422, 404, 405 and the GET list) has content type application/json and never text/html",
+      "ac_id": "AC3-audit-record-unmodifiable",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR5-spa-json-boundary"
+    },
+    {
+      "id": "T29",
+      "description": "A raw INSERT into stock_adjustments with an empty-string actor is rejected by ck_stock_adjustments_actor_non_blank on the paired branch",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI9-actor-non-blank",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T30",
+      "description": "POST /api/adjustments with an empty actor returns 422 whose detail names the 'actor' field",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T31",
+      "description": "POST /api/adjustments with an empty actor leaves stock_records.quantity unchanged for the pair",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T32",
+      "description": "POST /api/adjustments with an empty actor writes no stock_adjustments row for the pair (delta of the test's own rows is zero)",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR1-adjustment-audit-and-migration-safety"
+    },
+    {
+      "id": "T33",
+      "description": "AdjustmentService.adjust_to_value called with its injected session and a blank actor never reaches the repository write (patched repository write is assert-not-called)",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "fitness"
+    },
+    {
+      "id": "T34",
+      "description": "AdjustForm renders field-actor-error naming 'Your name' on a field--error actor field when the actor is left empty",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T35",
+      "description": "AdjustForm still shows adjust-current-qty as 7 after the empty-actor submit is rejected",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T36",
+      "description": "AdjustForm renders the adjust-audit-empty state with no audit row after the empty-actor submit is rejected",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T37",
+      "description": "Playwright e2e at route /adjust against the live DB (per-run-unique sku at quantity 7): submitting a corrected quantity with the actor field empty shows an inline field-actor-error next to field-actor naming 'Your name'",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-actor-required.spec.ts"
+    },
+    {
+      "id": "T38",
+      "description": "Playwright e2e at route /adjust against the live DB (per-run-unique sku at quantity 7): after the empty-actor rejection adjust-current-qty still shows 7 and the adjust-audit list gains no adjust-audit-row",
+      "ac_id": "AC4-actor-required",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-actor-required.spec.ts"
+    },
+    {
+      "id": "T1",
+      "description": "After POST /api/adjustments sets a (sku, location) from 7 to 4, exactly one stock_records row exists for that pair carrying quantity 4",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR3-adjust-addresses-existing-pair"
+    },
+    {
+      "id": "T2",
+      "description": "AdjustForm rendered for an existing (sku, location) pair shows its current quantity 7 read-only in the adjust-current-qty seam",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T3",
+      "description": "AdjustForm renders every field (field-sku, field-location, field-quantity, field-actor) with a visible persistent field__label",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T4",
+      "description": "AdjustForm renders the adjust-success confirmation naming sku, location, prior quantity 7 to new quantity 4 and actor after a real submit",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/AdjustForm.test.tsx"
+    },
+    {
+      "id": "T5",
+      "description": "Playwright e2e on the deployed app at route /adjust?sku=&location= (through the real App, live DB, per-run crypto.randomUUID()-suffixed sku filed at quantity 7): adjust-current-qty shows 7 and, after entering Corrected quantity 4 and Your name and clicking adjust-submit, adjust-success appears naming the sku, location, prior 7 to new 4 and actor, with toast-success",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-to-value.spec.ts"
+    },
+    {
+      "id": "T6",
+      "description": "Playwright e2e (client/tests/e2e/*.spec.ts, same per-run-unique sku): after the adjustment succeeds, navigating to /sku/:sku shows sku-qty-<loc> with quantity 4 from the live DB",
+      "ac_id": "AC1-form-sets-corrected-level",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/adjust-to-value.spec.ts"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "AC4-actor-required",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator submits the adjustment form with a corrected quantity but leaves the actor field empty",
+  "then": "the adjustment is rejected with an inline error next to the actor field naming that field (not a generic 'bad request'), the quantity stays 7, and no audit record is created",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Valid adjustments and their audit records (AC1-AC3) can all pass while an adjustment with no actor is silently accepted, leaving an audit record that does not say who made it."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server contract: validation lives at the boundary/service (actor trimmed non-empty), returning 422 {detail:[{field:'actor',...}]} which the AdjustPage maps to the inline field-actor-error naming 'Your name'; the service rejects before any write, so quantity stays 7 and no audit row exists (PI9 CHECK is the DB backstop). Actor is an operator-typed form field, not an authenticated identity (no auth in V1); Playwright against the live API, with the backend rule also pinned by NFR1's actor clause.",
+  "ui_seams": [
+    "adjust-form",
+    "field-quantity",
+    "field-actor",
+    "field-actor-error",
+    "adjust-submit",
+    "adjust-current-qty",
+    "adjust-audit"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

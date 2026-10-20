@@ -1,0 +1,14 @@
+{
+  "id": "AC3-delta-audit-records-resulting-level",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator successfully adjusts it by a delta of +5",
+  "then": "exactly one adjustment audit record is retrievable for that adjustment, showing prior quantity 7, the delta +5, new quantity 12, the time it happened, and the actor the operator entered",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The stock level can update correctly from a delta (AC1/AC2 green) while the audit record is missing, stores the delta as the new quantity, or omits the delta; the delta path's audit content is independently breakable from S1's absolute-value audit."
+  },
+  "layer": "API",
+  "architectural_notes": "API write rule: AdjustmentService.adjust_by_delta inserts exactly one StockAdjustment (app/models/stock_adjustment.py) via app/repositories/adjustment.py with prior_quantity 7 (read under lock) and the RESULTING new_quantity 12 (not the delta), plus caller actor and server-stamped adjusted_at, atomically with the quantity update (PI13). The delta +5 is derived as new - prior in EP6/EP7 responses (OD2, no new column), so it cannot drift from stored values; verified by pytest-bdd POSTing to EP6 then reading EP7 against the paired branch.",
+  "api_contract_id": "EP7-list-adjustments"
+}

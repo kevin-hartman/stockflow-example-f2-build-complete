@@ -1,0 +1,21 @@
+{
+  "id": "AC2-negative-delta-decreases-level",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator submits the adjustment form with a delta of -3 and their name as the actor",
+  "then": "viewing that (sku, location) afterwards shows quantity 4",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Handling of the sign is independently breakable: a positive delta can apply correctly (AC1 green) while a negative delta is ignored, added, or rejected."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server contract for the sign: the client passes the signed delta (-3) unchanged in the POST body, and the service (not the client or route) applies new = prior + delta under the row lock, so the decrease is server-decided. SKU detail then shows 4; a result below 0 is S3's rejection, with PI10 and the stock_records CHECK as DB backstops. Playwright against the live API on the paired branch.",
+  "ui_seams": [
+    "adjust-mode-delta",
+    "field-delta",
+    "field-actor",
+    "adjust-submit",
+    "adjust-success"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "AC2-negative-corrected-value-rejected-inline",
+  "status": "draft",
+  "given": "an existing stock record for a (sku, location) pair with quantity 7",
+  "when": "the operator submits the adjustment form with a corrected quantity of -2 and their name as the actor",
+  "then": "the adjustment is rejected with an inline error next to the quantity field that names the field, the quantity stays 7, and no audit record is created",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The absolute-value path is a separate input: a below-zero delta can be rejected (AC1 green) while a negative corrected value is stored."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client<->server contract on the set-to-value path: a quantity of -2 is rejected by the boundary/service validation (quantity >= 0) with the 422 field 'quantity' envelope, rendered by AdjustPage as the inline field-quantity-error naming 'Corrected quantity'. No write occurs, so quantity stays 7 and no audit row (stock_records CHECK and PI10 are DB backstops); Playwright against the live API on the paired branch.",
+  "ui_seams": [
+    "adjust-mode-value",
+    "field-quantity",
+    "field-quantity-error",
+    "adjust-current-qty",
+    "adjust-audit"
+  ],
+  "api_contract_id": "EP6-adjust-stock"
+}
