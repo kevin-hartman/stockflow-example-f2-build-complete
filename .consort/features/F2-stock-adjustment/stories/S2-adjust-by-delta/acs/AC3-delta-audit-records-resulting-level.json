@@ -1,6 +1,6 @@
 {
   "id": "AC3-delta-audit-records-resulting-level",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator successfully adjusts it by a delta of +5",
   "then": "exactly one adjustment audit record is retrievable for that adjustment, showing prior quantity 7, the delta +5, new quantity 12, the time it happened, and the actor the operator entered",

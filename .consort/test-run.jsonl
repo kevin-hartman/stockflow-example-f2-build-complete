@@ -316,3 +316,109 @@
 {"ts":"2026-10-20T21:29:33.018Z","test_id":"T5","status":"green","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
 {"ts":"2026-10-20T21:29:33.019Z","test_id":"T6","status":"running","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
 {"ts":"2026-10-20T21:29:34.723Z","test_id":"T6","status":"green","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
+{"ts": "2026-10-20T21:34:22.377775+00:00", "test_id": "T39", "status": "running", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:24.009661+00:00", "test_id": "T39", "status": "green", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:25.305838+00:00", "test_id": "T7", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:26.014255+00:00", "test_id": "T7", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:27.028354+00:00", "test_id": "T8", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:27.881253+00:00", "test_id": "T8", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:28.868165+00:00", "test_id": "T9", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:29.718974+00:00", "test_id": "T9", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:30.747932+00:00", "test_id": "T10", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:32.015797+00:00", "test_id": "T10", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:33.055325+00:00", "test_id": "T11", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:34.747405+00:00", "test_id": "T11", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:36.044590+00:00", "test_id": "T12", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:37.366886+00:00", "test_id": "T13", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:38.703367+00:00", "test_id": "T14", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:39.711801+00:00", "test_id": "T15", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:40.159118+00:00", "test_id": "T15", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:41.190019+00:00", "test_id": "T16", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:41.481889+00:00", "test_id": "T16", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:42.512723+00:00", "test_id": "T17", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:42.770265+00:00", "test_id": "T17", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:43.830006+00:00", "test_id": "T18", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:44.086196+00:00", "test_id": "T18", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:45.312198+00:00", "test_id": "T19", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:45.424294+00:00", "test_id": "T19", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:46.465770+00:00", "test_id": "T20", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:47.084366+00:00", "test_id": "T20", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:48.124376+00:00", "test_id": "T21", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:51.709974+00:00", "test_id": "T21", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:52.698707+00:00", "test_id": "T22", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:56.439692+00:00", "test_id": "T22", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:57.602787+00:00", "test_id": "T23", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:57.713757+00:00", "test_id": "T23", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:58.787072+00:00", "test_id": "T27", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:34:59.338504+00:00", "test_id": "T27", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:01.245586+00:00", "test_id": "T24", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:03.148686+00:00", "test_id": "T25", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:04.991861+00:00", "test_id": "T26", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:06.013383+00:00", "test_id": "T28", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:07.423959+00:00", "test_id": "T28", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:08.438499+00:00", "test_id": "T1", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:09.245946+00:00", "test_id": "T1", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:10.318720+00:00", "test_id": "T29", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:10.573731+00:00", "test_id": "T29", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:11.646215+00:00", "test_id": "T30", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:11.948473+00:00", "test_id": "T30", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:12.975921+00:00", "test_id": "T31", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:13.382729+00:00", "test_id": "T31", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:14.454284+00:00", "test_id": "T32", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:15.002082+00:00", "test_id": "T32", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:16.075527+00:00", "test_id": "T33", "status": "running", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:35:16.081577+00:00", "test_id": "T33", "status": "green", "file": "tests/test_stock_adjustments.py", "kind": "behavior"}
+{"ts":"2026-10-20T21:35:26.055Z","test_id":"T40","status":"green","file":"client/tests/components/AdjustDeltaPreview.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.056Z","test_id":"T42","status":"green","file":"client/tests/components/AdjustDeltaPreview.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.056Z","test_id":"T2","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.056Z","test_id":"T3","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.057Z","test_id":"T4","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.057Z","test_id":"T34","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.057Z","test_id":"T35","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:26.057Z","test_id":"T36","status":"green","file":"client/tests/components/AdjustForm.test.tsx","kind":"client"}
+{"ts":"2026-10-20T21:35:32.492Z","test_id":"T43","status":"running","file":"client/tests/e2e/adjust-delta-decrease.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:35.957Z","test_id":"T43","status":"green","file":"client/tests/e2e/adjust-delta-decrease.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:35.966Z","test_id":"T41","status":"running","file":"client/tests/e2e/adjust-delta-increase.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:37.693Z","test_id":"T41","status":"green","file":"client/tests/e2e/adjust-delta-increase.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:37.698Z","test_id":"T5","status":"running","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:39.104Z","test_id":"T5","status":"green","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:39.105Z","test_id":"T6","status":"running","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
+{"ts":"2026-10-20T21:35:41.347Z","test_id":"T6","status":"green","file":"client/tests/e2e/adjust-to-value.spec.ts","kind":"client"}
+{"ts": "2026-10-20T21:36:30.331891+00:00", "test_id": "T44", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:31.830316+00:00", "test_id": "T44", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:32.911429+00:00", "test_id": "T45", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:33.796648+00:00", "test_id": "T45", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:34.991682+00:00", "test_id": "T46", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:35.877664+00:00", "test_id": "T46", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:36.892839+00:00", "test_id": "T47", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:37.636833+00:00", "test_id": "T47", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:38.700780+00:00", "test_id": "T48", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:36:39.017287+00:00", "test_id": "T48", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:01.417315+00:00", "test_id": "T44", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:02.844014+00:00", "test_id": "T44", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:03.912230+00:00", "test_id": "T45", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:05.021919+00:00", "test_id": "T45", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:06.031080+00:00", "test_id": "T46", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:06.891174+00:00", "test_id": "T46", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:07.913606+00:00", "test_id": "T47", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:08.248201+00:00", "test_id": "T47", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:09.257085+00:00", "test_id": "T48", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:09.564112+00:00", "test_id": "T48", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:10.604932+00:00", "test_id": "T39", "status": "running", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:11.434160+00:00", "test_id": "T39", "status": "green", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:16.590883+00:00", "test_id": "T47", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:17.492142+00:00", "test_id": "T47", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:18.579813+00:00", "test_id": "T48", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:18.898301+00:00", "test_id": "T48", "status": "red", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:27.963225+00:00", "test_id": "T44", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:29.379166+00:00", "test_id": "T44", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:30.406066+00:00", "test_id": "T45", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:31.267085+00:00", "test_id": "T45", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:32.302932+00:00", "test_id": "T46", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:33.164300+00:00", "test_id": "T46", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:34.177176+00:00", "test_id": "T47", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:34.627373+00:00", "test_id": "T47", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:35.642602+00:00", "test_id": "T48", "status": "running", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:36.097294+00:00", "test_id": "T48", "status": "green", "file": "tests/test_adjust_by_delta.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:37.104090+00:00", "test_id": "T39", "status": "running", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}
+{"ts": "2026-10-20T21:37:37.929066+00:00", "test_id": "T39", "status": "green", "file": "tests/test_adjust_by_delta_fitness.py", "kind": "behavior"}

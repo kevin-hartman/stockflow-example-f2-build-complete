@@ -1,6 +1,6 @@
 {
   "id": "AC2-negative-delta-decreases-level",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator submits the adjustment form with a delta of -3 and their name as the actor",
   "then": "viewing that (sku, location) afterwards shows quantity 4",

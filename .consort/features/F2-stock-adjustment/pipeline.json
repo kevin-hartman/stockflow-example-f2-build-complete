@@ -40,7 +40,7 @@
       }
     },
     "S2-adjust-by-delta": {
-      "status": "building",
+      "status": "awaiting-acceptance",
       "gate": {
         "status": "approved",
         "history": [
@@ -52,6 +52,19 @@
         ],
         "approver": "Kevin Hartman",
         "approved_at": "2026-10-20T13:54:41.404Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s2-adjust-by-delta-exp1",
+        "parent": "feature-f2-stock-adjustment",
+        "n": 1,
+        "status": "active",
+        "cut_at": "2026-10-20T21:32:36.605Z",
+        "design_fingerprint": "fa2e344dfc7f17a8"
+      },
+      "acceptance": {
+        "decision": null,
+        "history": []
       }
     },
     "S3-reject-negative-stock": {

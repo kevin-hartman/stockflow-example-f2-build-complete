@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "feature_id": "F2-stock-adjustment",
+  "story_id": "S2-adjust-by-delta",
+  "target": "local",
+  "url": "http://127.0.0.1:8002/health",
+  "reachable": true,
+  "verify": {
+    "passed": true,
+    "command": "./scripts/run-tests.sh",
+    "summary": "feature-verify passed against the running app"
+  },
+  "lakebase_branch": "experiment-s2-adjust-by-delta-exp1",
+  "deployed_at": "2026-10-20T21:38:38.826Z"
+}
