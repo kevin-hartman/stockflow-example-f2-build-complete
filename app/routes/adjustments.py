@@ -27,6 +27,13 @@ class AdjustIn(BaseModel):
             raise ValueError("must not be blank")
         return v.strip()
 
+    @field_validator("delta")
+    @classmethod
+    def _non_zero(cls, v: int | None) -> int | None:
+        if v == 0:
+            raise ValueError("delta must not be zero")
+        return v
+
     @model_validator(mode="after")
     def _one_mode(self) -> "AdjustIn":
         if (self.quantity is None) == (self.delta is None):

@@ -7,7 +7,11 @@ from fastapi.responses import JSONResponse
 
 async def validation_error_handler(_request: Request, exc: RequestValidationError) -> JSONResponse:
     detail = [
-        {"field": str(err["loc"][-1]) if err.get("loc") else "", "message": err.get("msg", "invalid")}
+        {
+            "field": str(err["loc"][-1]) if err.get("loc") else "",
+            "loc": list(err.get("loc", ())),
+            "message": err.get("msg", "invalid"),
+        }
         for err in exc.errors()
     ]
     return JSONResponse(status_code=422, content={"detail": detail})
