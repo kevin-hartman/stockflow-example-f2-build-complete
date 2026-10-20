@@ -3,7 +3,7 @@
   "feature_id": "F2-stock-adjustment",
   "stories": {
     "S1-adjust-to-value": {
-      "status": "awaiting-acceptance",
+      "status": "done",
       "gate": {
         "status": "approved",
         "history": [
@@ -21,17 +21,26 @@
         "branch": "experiment-s1-adjust-to-value-exp1",
         "parent": "feature-f2-stock-adjustment",
         "n": 1,
-        "status": "active",
+        "status": "merged",
         "cut_at": "2026-10-20T21:19:36.229Z",
-        "design_fingerprint": "d3877a7b72e38522"
+        "design_fingerprint": "d3877a7b72e38522",
+        "closed_at": "2026-10-20T21:32:19.707Z"
       },
       "acceptance": {
-        "decision": null,
-        "history": []
+        "decision": "accepted",
+        "history": [
+          {
+            "decision": "accepted",
+            "at": "2026-10-20T21:32:19.707Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "at": "2026-10-20T21:32:19.707Z"
       }
     },
     "S2-adjust-by-delta": {
-      "status": "ready",
+      "status": "building",
       "gate": {
         "status": "approved",
         "history": [
@@ -62,8 +71,7 @@
     }
   },
   "build_queue": [
-    "S2-adjust-by-delta",
     "S3-reject-negative-stock"
   ],
-  "build_active": "S1-adjust-to-value"
+  "build_active": "S2-adjust-by-delta"
 }
