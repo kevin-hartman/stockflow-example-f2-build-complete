@@ -3,10 +3,11 @@
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator, model_validator
 from sqlalchemy.orm import Session
 
-from app.services.adjustments import AdjustmentService, StockRecordNotFound, get_session
+from app.services.adjustments import AdjustmentService, NegativeStockLevel, StockRecordNotFound, get_session
 
 router = APIRouter(prefix="/api/adjustments")
 service = AdjustmentService()
@@ -15,7 +16,8 @@ service = AdjustmentService()
 class AdjustIn(BaseModel):
     sku: str = Field(min_length=1, max_length=255)
     location: str = Field(min_length=1, max_length=255)
-    quantity: int = Field(ge=0)
+    quantity: int | None = Field(default=None, ge=0)
+    delta: int | None = None
     actor: str = Field(min_length=1, max_length=255)
 
     @field_validator("sku", "location", "actor")
@@ -24,6 +26,12 @@ class AdjustIn(BaseModel):
         if not v.strip():
             raise ValueError("must not be blank")
         return v.strip()
+
+    @model_validator(mode="after")
+    def _one_mode(self) -> "AdjustIn":
+        if (self.quantity is None) == (self.delta is None):
+            raise ValueError("provide exactly one of quantity or delta")
+        return self
 
 
 class AdjustmentOut(BaseModel):
@@ -44,9 +52,17 @@ class AdjustmentOut(BaseModel):
 @router.post("", response_model=AdjustmentOut, status_code=201)
 def adjust(body: AdjustIn, session: Session = Depends(get_session)):
     try:
-        return service.adjust_to_value(session, **body.model_dump())
+        if body.delta is not None:
+            return service.adjust_by_delta(
+                session, sku=body.sku, location=body.location, delta=body.delta, actor=body.actor
+            )
+        return service.adjust_to_value(
+            session, sku=body.sku, location=body.location, quantity=body.quantity, actor=body.actor
+        )
     except StockRecordNotFound as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except NegativeStockLevel as exc:
+        return JSONResponse(status_code=422, content={"detail": [{"field": "delta", "message": str(exc)}]})
 
 
 @router.get("", response_model=list[AdjustmentOut])

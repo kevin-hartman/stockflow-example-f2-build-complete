@@ -37,3 +37,6 @@ class AdjustmentRepository:
 
     def commit(self) -> None:
         self.session.commit()
+
+    def rollback(self) -> None:
+        self.session.rollback()

@@ -13,7 +13,8 @@ export interface Adjustment {
 export interface AdjustInput {
   sku: string;
   location: string;
-  quantity: number | string;
+  quantity?: number | string;
+  delta?: number | string;
   actor: string;
 }
 
