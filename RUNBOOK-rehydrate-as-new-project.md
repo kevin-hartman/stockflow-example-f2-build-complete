@@ -154,21 +154,55 @@ substitution still applies (set it to `$DURABLE` in the copy you push), and `set
 change. Use this when the live project must survive the snapshot (the snapshot is a point-in-time
 fork, not a hand-off of the working repo).
 
-**Updating the snapshot on a kit version bump.** When the working project upgrades its Consort kit
-to a new `vX.Y.Z`, the only committed file that drifts is `.lakebase/kit-ref` (the kit pin a
-rehydration / CI resolves). Bump it to `vX.Y.Z` on `main`, forward-merge the ancestry (it's
-project-level, present on all branches), and push to the snapshot repo only — never the working
-project's repo. Do NOT re-capture run-state, logs, or any gitignored runtime; a bare version bump
-drifts only `kit-ref`. (`.lakebase/kit-ref.local` is the gitignored per-run override and is never in
-the snapshot.)
+**Updating the snapshot on a kit version bump — DO EVERY STEP (per snapshot repo).** Bumping
+`.lakebase/kit-ref` alone is NOT enough. When the kit's scaffold surface changed between versions, a
+bare pin bump leaves the committed surface frozen at the old kit, so a rehydrate runs new kit CODE
+against an OLD surface and halts the lane on a `scaffold-defect` (the item-0 gotcha above). The
+correct update runs the real `consort-upgrade` — which refreshes the FULL surface and dual-pins the
+kit — but it auto-commits ONLY the kit-owned surface, so you MUST also commit the E2E-enablement
+artifacts it leaves in the working tree and drop its transient rollback record. Run every step below
+against a FRESH clone of each snapshot; push to the snapshot repo only, never the working project's.
+
+Index: 1 clone → 2 cache → 3 consort-upgrade → 4 commit E2E artifacts → 5 drop transients →
+6 verify surface complete → 7 forward-merge → 8 push.
 
 ```bash
-git switch main
-printf 'vX.Y.Z' > .lakebase/kit-ref && git add .lakebase/kit-ref && git commit -m "chore: bump kit-ref to vX.Y.Z"
+# 1. Fresh-clone the snapshot (never a stale local clone), on the trunk.
+git clone https://github.com/<owner>/<project>-<feature>-design-complete.git && cd <that-dir>
+git checkout main
+
+# 2. Resolve the target kit into the shared cache (the consumer path).
+LAKEBASE_KIT_REF=vX.Y.Z ./scripts/lk --refresh
+
+# 3. Run the REAL upgrade. It dual-pins kit-ref(.local) + refreshes the full surface
+#    (agents/commands/scripts/workflows/skills/root files) + re-wires the Playwright E2E block,
+#    and AUTO-COMMITS ONLY the kit-owned surface ("chore(kit): refresh scaffolded surface to vX.Y.Z").
+LAKEBASE_KIT_REF=vX.Y.Z ./scripts/lk consort-upgrade
+
+# 4. Commit the E2E-enablement files consort-upgrade does NOT auto-commit (stage by EXACT path,
+#    never `git add -A`): the pytest-playwright dev-dep (pyproject.toml) + the E2E conftest
+#    (tests/e2e/conftest.py), plus any other NON-transient file the upgrade left behind.
+git add pyproject.toml tests/e2e/conftest.py
+git commit -m "chore(kit): E2E enablement artifacts for vX.Y.Z"
+
+# 5. Drop the transient rollback record — it must NEVER ship in a snapshot.
+rm -f .lakebase/kit-ref.prev          # (.lakebase/kit-ref.local is gitignored; leave it.)
+
+# 6. Verify the surface is COMPLETE (item-0 scaffold-defect gotcha): BOTH must print nothing.
+git diff --name-only
+git ls-files --others --exclude-standard
+
+# 7. Forward-merge the ancestry (project-level, on all branches). No rebase, no force.
 git switch staging        && git merge --no-ff main
 git switch feature-<slug> && git merge --no-ff staging
-git push origin main staging feature-<slug>   # the snapshot repo only
+
+# 8. Push all branches to the snapshot repo ONLY.
+git push origin main staging feature-<slug>
 ```
+
+> Repeat 1–8 for EACH snapshot repo. `consort-upgrade` is the same tool a live project upgrades with;
+> on a dormant snapshot it runs at a clean stop (no drive), so the quiesce gate passes with a
+> liveness-unverified note. Do NOT re-capture run-state, logs, or any gitignored runtime.
 
 ---
 
