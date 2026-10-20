@@ -1,0 +1,28 @@
+{
+  "ordinal": 57,
+  "step": 0,
+  "label": "spec-author",
+  "kind": "invoke-role",
+  "role": "spec-author",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "invoke-role",
+    "role": "spec-author",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/features/F2-stock-adjustment/feature-spec.md",
+    ".consort/features/F2-stock-adjustment/stories/S2-adjust-by-delta/acs/AC1-positive-delta-increases-level.json",
+    ".consort/features/F2-stock-adjustment/stories/S2-adjust-by-delta/acs/AC2-negative-delta-decreases-level.json",
+    ".consort/features/F2-stock-adjustment/stories/S2-adjust-by-delta/acs/AC3-delta-audit-records-resulting-level.json"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "spec-author",
+    "model": "opus",
+    "toolCount": 1,
+    "finalTextChars": 317
+  }
+}

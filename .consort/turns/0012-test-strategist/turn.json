@@ -1,0 +1,31 @@
+{
+  "ordinal": 12,
+  "step": 0,
+  "label": "test-strategist",
+  "kind": "invoke-role",
+  "role": "test-strategist",
+  "story": "S2-stock-by-location-table",
+  "action": {
+    "kind": "invoke-role",
+    "role": "test-strategist",
+    "story": "S2-stock-by-location-table"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/.selfcheck-behavior-analyst.json",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/.selfcheck-client-analyst.json",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/.selfcheck-component-analyst.json",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/.selfcheck-fitness-analyst.json",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/analyst-ordered.json",
+    ".consort/features/F1-stock-visibility/stories/S2-stock-by-location-table/fan-out.log",
+    ".consort/features/F1-stock-visibility/test-list.json"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "test-strategist",
+    "model": "sonnet",
+    "toolCount": 3,
+    "finalTextChars": 351
+  }
+}

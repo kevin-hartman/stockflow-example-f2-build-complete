@@ -1,0 +1,27 @@
+{
+  "ordinal": 2,
+  "step": 0,
+  "label": "ux-designer-ia",
+  "kind": "invoke-role",
+  "role": "ux-designer",
+  "mode": "ia",
+  "story": "S1-file-stock",
+  "action": {
+    "kind": "invoke-role",
+    "role": "ux-designer",
+    "mode": "ia",
+    "story": "S1-file-stock"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/design/ia.md"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "ux-designer",
+    "model": "opus",
+    "toolCount": 3,
+    "finalTextChars": 149
+  }
+}

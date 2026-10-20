@@ -1,0 +1,16 @@
+{
+  "ordinal": 56,
+  "step": 0,
+  "label": "gate-surface",
+  "kind": "surface-gate",
+  "story": "S1-adjust-to-value",
+  "action": {
+    "kind": "surface-gate",
+    "story": "S1-adjust-to-value"
+  },
+  "produced": [
+    ".consort/features/F2-stock-adjustment/pipeline.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

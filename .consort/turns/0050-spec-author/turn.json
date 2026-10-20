@@ -1,0 +1,30 @@
+{
+  "ordinal": 50,
+  "step": 0,
+  "label": "spec-author",
+  "kind": "invoke-role",
+  "role": "spec-author",
+  "story": "S1-adjust-to-value",
+  "action": {
+    "kind": "invoke-role",
+    "role": "spec-author",
+    "story": "S1-adjust-to-value"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/features/F2-stock-adjustment/feature-spec.md",
+    ".consort/features/F2-stock-adjustment/pipeline.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC1-form-sets-corrected-level.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC2-audit-record-captures-when-and-who.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC3-audit-record-unmodifiable.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC4-actor-required.json"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "spec-author",
+    "model": "opus",
+    "toolCount": 2,
+    "finalTextChars": 327
+  }
+}
