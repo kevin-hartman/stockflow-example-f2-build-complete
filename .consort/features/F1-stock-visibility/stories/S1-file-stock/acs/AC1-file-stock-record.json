@@ -1,0 +1,19 @@
+{
+  "id": "AC1-file-stock-record",
+  "status": "passing",
+  "given": "an operator on the file-stock form, where the locations already on record are offered for selection and a brand-new location can also be entered",
+  "when": "they submit a SKU, a location (either an existing one chosen without retyping, or a new one never used before), a quantity, and optionally a tracking_code",
+  "then": "the form confirms the stock record was filed for that (sku, location) with the submitted quantity; the tracking_code is stored when given and stored as absent (not tracked) when omitted, and neither a new location nor an omitted tracking_code blocks the submission",
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract: FileStockPage (client/src/pages) submits via api/stock.ts to POST /api/stock (app/routes/stock.py -> StockService.file_stock -> StockRepository.upsert), and file-confirmation renders the server's returned record. field-location is a creatable combobox fed by GET /api/locations (EP3, distinct stock_records.location), so an existing location is chosen without retyping and a new one is accepted; blank tracking_code is normalized to null (not tracked) in the service. Validation lives at the boundary schema + service, the transaction in the service, persistence only in the repository.",
+  "ui_seams": [
+    "file-stock-form",
+    "field-sku",
+    "field-location",
+    "field-quantity",
+    "field-tracking-code",
+    "file-submit",
+    "file-confirmation"
+  ],
+  "api_contract_id": "EP1-file-stock"
+}

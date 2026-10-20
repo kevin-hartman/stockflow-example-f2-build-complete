@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "id": "T52",
+      "description": "GET /api/skus/{sku} for a SKU holding stock on the paired branch responds with content-type application/json, never text/html",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR5-spa-json-boundary"
+    },
+    {
+      "id": "T64",
+      "description": "GET /api/skus/{sku} for a SKU with no stock responds 200 with content-type application/json and an empty locations array, never a 404 or text/html error page",
+      "ac_id": "AC4-sku-with-no-stock-empty-state",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR5-spa-json-boundary"
+    },
+    {
+      "id": "T53",
+      "description": "SkuDetailPage rendered alone against the real API shows one sku-location row per location holding stock for the requested SKU, each with its sku-qty quantity",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T54",
+      "description": "SkuDetailPage rendered alone against the real API omits another SKU's locations and quantities from the sku-locations list",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T58",
+      "description": "SkuDetailPage rendered alone shows the filed tracking_code in the sku-tracking cell of a location filed with a code",
+      "ac_id": "AC2-shows-tracking-code",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T59",
+      "description": "SkuDetailPage rendered alone shows the not-tracked indicator (sku-tracking-not-tracked, not-tracked class, text 'Not tracked') for a location filed without a tracking_code, never a blank cell",
+      "ac_id": "AC2-shows-tracking-code",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T62",
+      "description": "SkuDetailPage rendered alone shows the sku-par-not-tracked 'Not tracked' indicator inside the sku-par-level region, never a blank region or sku-error",
+      "ac_id": "AC3-par-level-not-tracked",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T65",
+      "description": "SkuDetailPage rendered alone for a SKU with no records shows the sku-empty state stating the SKU has no stock at any location, with no location rows and no sku-error",
+      "ac_id": "AC4-sku-with-no-stock-empty-state",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T66",
+      "description": "SkuDetailPage rendered alone for a SKU with only quantity-0 records shows the sku-empty state rather than a location row",
+      "ac_id": "AC4-sku-with-no-stock-empty-state",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/SkuDetailPage.test.tsx"
+    },
+    {
+      "id": "T55",
+      "description": "client/tests/e2e/sku-detail.spec.ts: navigating the deployed app to /sku/:sku for a run-unique SKU (crypto.randomUUID suffix) filed at several locations shows a sku-location-<loc> row with its sku-qty-<loc> quantity for each of those locations",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T56",
+      "description": "client/tests/e2e/sku-detail.spec.ts: with another run-unique SKU also holding stock, the /sku/:sku page of the first SKU shows no sku-location row from the other SKU's locations",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T57",
+      "description": "client/tests/e2e/sku-detail.spec.ts: clicking stock-row-<sku>-<loc> on the home page / navigates in the SPA to /sku/:sku and shows the sku-detail container with sku-locations",
+      "ac_id": "AC1-lists-stock-across-locations",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T60",
+      "description": "client/tests/e2e/sku-detail.spec.ts: on /sku/:sku a location filed with a tracking_code shows that combined code in its sku-tracking-<loc> cell against the live DB",
+      "ac_id": "AC2-shows-tracking-code",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T61",
+      "description": "client/tests/e2e/sku-detail.spec.ts: on /sku/:sku a location filed without a tracking_code shows the explicit sku-tracking-not-tracked-<loc> 'Not tracked' label, not a blank cell",
+      "ac_id": "AC2-shows-tracking-code",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T63",
+      "description": "client/tests/e2e/sku-detail.spec.ts: on /sku/:sku for a SKU holding stock the sku-par-level region shows sku-par-not-tracked 'Not tracked' and no sku-error",
+      "ac_id": "AC3-par-level-not-tracked",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T67",
+      "description": "client/tests/e2e/sku-detail.spec.ts: /sku/:sku for a SKU filed only with quantity 0 shows the sku-empty 'This SKU has no stock at any location' state and no sku-location rows",
+      "ac_id": "AC4-sku-with-no-stock-empty-state",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    },
+    {
+      "id": "T68",
+      "description": "client/tests/e2e/sku-detail.spec.ts: /sku/:sku for a never-filed run-unique SKU shows the sku-empty state rather than a blank or error page",
+      "ac_id": "AC4-sku-with-no-stock-empty-state",
+      "status": "pending",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/sku-detail.spec.ts"
+    }
+  ]
+}

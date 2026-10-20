@@ -1,0 +1,135 @@
+{
+  "feature_id": "F1-stock-visibility",
+  "story_id": "S2-stock-by-location-table",
+  "ordered_for": "design-momentum",
+  "items": [
+    {
+      "id": "T39",
+      "description": "The integration session fixture used for the stock listing asserts the engine dialect is postgresql and its URL equals the paired branch DATABASE_URL read from the environment, failing fast on a sqlite/in-memory or mocked session",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "fitness",
+      "nfr_id": "NFR4-real-branch-integration-tests"
+    },
+    {
+      "id": "T36",
+      "description": "Migration SC5 is reversible on the paired branch: downgrade to the migration's own down_revision (explicit revision id, not a relative step) then upgrade head recreates partial index ix_stock_records_location_sku_held on (location, sku) INCLUDE (quantity, tracking_code) WHERE quantity > 0 (marked @pytest.mark.migration)",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "fitness",
+      "schema_change_id": "SC5-add-location-sku-held-index"
+    },
+    {
+      "id": "T37",
+      "description": "Stock_records rows seeded with per-run-unique keys before the SC5 migration survive with identical sku, location, quantity and tracking_code after downgrade to its down_revision then upgrade head (additive index migration on a pre-existing table)",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "fitness",
+      "schema_change_id": "SC5-add-location-sku-held-index"
+    },
+    {
+      "id": "T38",
+      "description": "GET /api/stock responds with Content-Type application/json (never text/html) for both the unfiltered and the ?location= filtered request",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "fitness",
+      "nfr_id": "NFR5-spa-json-boundary"
+    },
+    {
+      "id": "T40",
+      "description": "StockTable rendered against the real GET /api/stock shows one stock-row-<sku>-<loc> per (sku, location) held, with SKU, location and quantity cells, in client/tests/components/StockTable.test.tsx",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T41",
+      "description": "StockTable renders a stock-tracking-<sku>-<loc> cell with the record's tracking_code text for a real row that has one",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T42",
+      "description": "StockTable renders the tracking-not-tracked element with the not-tracked class and 'Not tracked' text, never a blank cell, for a real row with a null tracking_code",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T43",
+      "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) navigates to route / through the real App against the live DB, files stock via the real API under a crypto.randomUUID()-suffixed sku, and the stock-table shows a stock-row-<sku>-<loc> with the SKU, location and quantity columns",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+    },
+    {
+      "id": "T44",
+      "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) at route / shows the tracking code in stock-tracking-<sku>-<loc> for a row filed with a tracking_code under a per-run-unique sku",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+    },
+    {
+      "id": "T45",
+      "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) at route / shows the explicit tracking-not-tracked label, never a blank cell, for a row filed without a tracking_code under a per-run-unique sku",
+      "ac_id": "AC1-table-lists-stock-by-location",
+      "status": "green",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+    },
+    {
+      "id": "T46",
+      "description": "StockTable gives the stock-col-quantity header and every stock-qty-<sku>-<loc> cell the stock-table__num class for real rows of differing digit lengths",
+      "ac_id": "AC2-quantity-right-aligned",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T47",
+      "description": "StockTable leaves the SKU, location and tracking cells without the stock-table__num class so text columns stay left-aligned",
+      "ac_id": "AC2-quantity-right-aligned",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T48",
+      "description": "Playwright e2e (client/tests/e2e/stock-quantity-alignment.spec.ts) at route / seeds quantities of differing digit lengths under per-run-unique skus and asserts the stock-col-quantity header and every stock-qty-<sku>-<loc> cell compute text-align right while the SKU, location and tracking cells compute left",
+      "ac_id": "AC2-quantity-right-aligned",
+      "status": "green",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/stock-quantity-alignment.spec.ts"
+    },
+    {
+      "id": "T49",
+      "description": "StockTable rendered for a real location holding only quantity-0 records shows the stock-empty 'No stock at this location' message in place of the table body",
+      "ac_id": "AC3-empty-location-state",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T50",
+      "description": "StockTable rendered for an empty real response shows the stock-empty state with no stock-row elements and no empty table body",
+      "ac_id": "AC3-empty-location-state",
+      "status": "green",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockTable.test.tsx"
+    },
+    {
+      "id": "T51",
+      "description": "Playwright e2e (client/tests/e2e/stock-empty-location.spec.ts) at route / seeds a quantity-0 record at a per-run-unique location, picks that location through the warehouse-select combobox, and sees the stock-empty 'No stock at this location' state in place of the stock-table rows",
+      "ac_id": "AC3-empty-location-state",
+      "status": "green",
+      "kind": "client",
+      "scenario_file": "client/tests/e2e/stock-empty-location.spec.ts"
+    }
+  ]
+}

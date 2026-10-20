@@ -1,0 +1,1 @@
+{"id":"S1-file-stock","asA":"warehouse operator","iWantTo":"file a SKU's stock at a location (choosing an existing location or entering a new one) and retrieve it","soThat":"what is on a shelf is recorded and readable","requires_e2e":true}

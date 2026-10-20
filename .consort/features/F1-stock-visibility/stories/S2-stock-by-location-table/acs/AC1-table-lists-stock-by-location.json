@@ -1,0 +1,17 @@
+{
+  "id": "AC1-table-lists-stock-by-location",
+  "status": "passing",
+  "given": "stock records filed for several SKUs across several locations, some with a tracking_code and some without",
+  "when": "the operator opens the home screen",
+  "then": "a stock-by-location table shows one row per (sku, location) holding stock, with SKU, location, quantity and tracking code columns; a row with a tracking_code shows it, and a row without one shows an explicit 'not tracked', never a blank cell",
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract: HomePage (client/src/pages) loads via api/stock.ts + a useStock hook from GET /api/stock (app/routes/stock.py -> StockService.list_stock -> StockRepository.list_held, quantity > 0, ordered by location, sku) and renders one stock-row per returned record. A null tracking_code renders the explicit tracking-not-tracked label in the client, never a blank cell; verified by Playwright against the live API on the paired branch, no mocked envelope.",
+  "ui_seams": [
+    "stock-table",
+    "stock-row-<sku>-<loc>",
+    "stock-qty-<sku>-<loc>",
+    "stock-tracking-<sku>-<loc>",
+    "tracking-not-tracked"
+  ],
+  "api_contract_id": "EP4-list-stock"
+}

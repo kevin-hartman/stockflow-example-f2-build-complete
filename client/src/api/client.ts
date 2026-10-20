@@ -34,7 +34,9 @@ export class ApiError extends Error {
 // never renders). Parse BOTH shapes so the field-level refusal survives to the UI.
 export function _problemDetail(body: unknown): ProblemDetail {
   if (!body || typeof body !== "object") return {};
-  const detail = (body as { detail?: unknown }).detail;
+  const raw = (body as { detail?: unknown }).detail;
+  // A list of field refusals ({detail: [{field, message}]}): surface the first one.
+  const detail = Array.isArray(raw) ? raw[0] : raw;
   if (typeof detail === "string") return { message: detail };
   if (detail && typeof detail === "object") {
     const d = detail as { field?: unknown; message?: unknown };

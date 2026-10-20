@@ -1,0 +1,19 @@
+{
+  "id": "AC2-shows-tracking-code",
+  "status": "passing",
+  "given": "a SKU with one location's record filed with a tracking_code and another location's record filed without one",
+  "when": "the operator opens that SKU's detail view",
+  "then": "the location filed with a tracking_code shows that combined code, and the location filed without one shows an explicit 'not tracked', never a blank",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Tracking-code rendering is independently breakable: locations and quantities can list correctly while the code is missing or blank."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract over EP5: each location's tracking_code from the real response renders in its sku-tracking cell; a null tracking_code renders the explicit sku-tracking-not-tracked 'Not tracked' label in the client, never a blank. Null-normalization was done at write time by StockService (S1); verified by Playwright on the paired branch with one coded and one uncoded record.",
+  "ui_seams": [
+    "sku-tracking",
+    "sku-tracking-<loc>",
+    "sku-tracking-not-tracked-<loc>"
+  ],
+  "api_contract_id": "EP5-sku-detail"
+}

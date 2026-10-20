@@ -1,0 +1,19 @@
+{
+  "id": "AC3-empty-location-state",
+  "status": "passing",
+  "given": "a location that is on record but holds no stock (it has no records, or only quantity-0 records)",
+  "when": "the operator views the stock table for that location",
+  "then": "an explicit 'No stock at this location' message is shown in place of rows, never a blank page or an empty table body",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The empty path is independently breakable from the populated table: rows can render correctly while an empty location yields a blank page."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract per OD1 (resolved): warehouse-select is fed by GET /api/locations (EP3, all distinct locations incl. quantity-0-only ones); choosing one calls GET /api/stock?location= which StockService.list_stock returns [] for a location holding no stock (quantity > 0 filter in StockRepository). The client renders the stock-empty 'No stock at this location' state in place of the table body when the real response is empty; seeded with a quantity-0 record on the paired branch, never mocked.",
+  "ui_seams": [
+    "warehouse-select",
+    "stock-empty",
+    "stock-table"
+  ],
+  "api_contract_id": "EP4-list-stock"
+}

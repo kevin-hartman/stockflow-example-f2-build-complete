@@ -51,8 +51,8 @@ targets:
   # NOT yet implemented by /deploy. Deploy via the extension / app-deploy skill.
   prod:
     type: databricks-app
-    workspace_profile: your-profile-name
-    workspace_path: /Workspace/Users/you@databricks.com/stockflow-example
-    app_name: stockflow-example
-    lakebase_project: stockflow-example
+    workspace_profile: fevm-stockflow
+    workspace_path: /Workspace/Users/you@databricks.com/my-stockflow-example
+    app_name: my-stockflow-example
+    lakebase_project: my-stockflow-example
     lakebase_branch: production

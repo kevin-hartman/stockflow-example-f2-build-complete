@@ -1,0 +1,18 @@
+[
+  {
+    "id": "fit-1",
+    "description": "GET /api/skus/{sku} for a SKU holding stock on the paired branch responds with content-type application/json, never text/html",
+    "ac_id": "AC1-lists-stock-across-locations",
+    "status": "pending",
+    "kind": "fitness",
+    "nfr_id": "NFR5-spa-json-boundary"
+  },
+  {
+    "id": "fit-2",
+    "description": "GET /api/skus/{sku} for a SKU with no stock responds 200 with content-type application/json and an empty locations array, never a 404 or text/html error page",
+    "ac_id": "AC4-sku-with-no-stock-empty-state",
+    "status": "pending",
+    "kind": "fitness",
+    "nfr_id": "NFR5-spa-json-boundary"
+  }
+]

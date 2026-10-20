@@ -1,0 +1,14 @@
+{
+  "id": "AC3-collision-resolved-at-write",
+  "status": "passing",
+  "given": "an existing stock record for a (sku, location) pair",
+  "when": "the operator files stock for the same (sku, location) again with a different quantity and/or tracking_code",
+  "then": "the existing record is updated in place with the newly filed values, exactly one record for that (sku, location) exists, no duplicate is stored, and the operator sees the normal filed confirmation rather than an error page",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The same-key write path is independently breakable from a first write: first-file and read-back can pass while a repeat write duplicates or errors."
+  },
+  "layer": "API",
+  "architectural_notes": "API write rule owned by StockService.file_stock: a re-file of an existing (sku, location) is resolved at write time by StockRepository.upsert (INSERT ... ON CONFLICT (sku, location) DO UPDATE) in one service-owned transaction, returning the normal 200 filed record, never a 409/500. Backed by the UNIQUE (sku, location) constraint (PI1) and atomic upsert (PI6); a pytest-bdd test against the paired branch asserts exactly one row with the new values.",
+  "api_contract_id": "EP1-file-stock"
+}

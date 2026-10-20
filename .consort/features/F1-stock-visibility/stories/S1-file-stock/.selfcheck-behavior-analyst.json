@@ -1,0 +1,12 @@
+[
+{"id":"bhv-1","description":"Re-filing an existing (sku, location) with a different quantity returns 200 with the filed record carrying the new quantity (per-run-unique sku via uuid.uuid4())","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-2","description":"After re-filing an existing (sku, location) with a different quantity, GET /api/stock/record returns the NEW quantity, not the first-filed one","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-3","description":"After re-filing an existing (sku, location) with a different tracking_code, GET /api/stock/record returns the new tracking_code","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-4","description":"Re-filing an existing (sku, location) without a tracking_code makes GET /api/stock/record return tracking_code null (not tracked) with the new quantity","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-5","description":"Re-filing an existing (sku, location) twice never returns 409 or 500; both POSTs return 200","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-6","description":"After re-filing an existing (sku, location) at a unique location, GET /api/locations lists that location exactly once (no duplicate record)","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-7","description":"Filing the same sku at two different locations yields two coexisting records, each retrievable via GET /api/stock/record with its own quantity","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-8","description":"Filing two different skus at the same location yields two coexisting records, each retrievable with its own quantity","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-9","description":"Re-filing an existing (sku, location) with a negative quantity returns 422 naming the 'quantity' field and leaves the existing record's quantity unchanged","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"},
+{"id":"bhv-10","description":"Re-filing an existing location with the sku omitted returns 422 naming the 'sku' field","ac_id":"AC3-collision-resolved-at-write","status":"pending","kind":"behavior"}
+]

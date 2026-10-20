@@ -1,0 +1,1 @@
+{"id":"S2-stock-by-location-table","asA":"warehouse operator","iWantTo":"see a stock-by-location table on the home screen","soThat":"I can scan stock at a glance","requires_e2e":true,"independence":{"distinct_from_prior":true,"rationale":"Adds the home-screen list view across all records, unbuilt by the filing story."}}

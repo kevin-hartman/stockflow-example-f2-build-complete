@@ -1,0 +1,19 @@
+{
+  "id": "AC2-quantity-right-aligned",
+  "status": "passing",
+  "given": "the home stock-by-location table showing rows with quantities of differing digit lengths",
+  "when": "the operator scans the quantity column",
+  "then": "every quantity value (and its column header) is right-aligned so digits line up for comparison, while the text columns are left-aligned",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Presentation of the quantity column is independently breakable: the table can list correct rows with left-aligned quantities."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E presentation over real server rows: the StockTable component (client/src/components) styles the stock-col-quantity header and every stock-qty cell right-aligned (tabular-nums, --font-mono) while SKU/location/tracking columns stay left-aligned; no business logic, alignment is a client-only concern. A Playwright test seeds quantities of differing digit lengths on the paired branch and asserts computed text-align per column.",
+  "ui_seams": [
+    "stock-table",
+    "stock-col-quantity",
+    "stock-qty-<sku>-<loc>"
+  ],
+  "api_contract_id": "EP4-list-stock"
+}

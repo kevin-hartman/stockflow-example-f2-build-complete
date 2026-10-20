@@ -1,0 +1,42 @@
+[
+ {
+  "id": "cli-1",
+  "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) navigates to route / through the real App against the live DB, files stock via the real API under a crypto.randomUUID()-suffixed sku, and the stock-table shows a stock-row-<sku>-<loc> with the SKU, location and quantity columns",
+  "ac_id": "AC1-table-lists-stock-by-location",
+  "status": "pending",
+  "kind": "client",
+  "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+ },
+ {
+  "id": "cli-2",
+  "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) at route / shows the tracking code in stock-tracking-<sku>-<loc> for a row filed with a tracking_code under a per-run-unique sku",
+  "ac_id": "AC1-table-lists-stock-by-location",
+  "status": "pending",
+  "kind": "client",
+  "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+ },
+ {
+  "id": "cli-3",
+  "description": "Playwright e2e (client/tests/e2e/stock-by-location-table.spec.ts) at route / shows the explicit tracking-not-tracked label, never a blank cell, for a row filed without a tracking_code under a per-run-unique sku",
+  "ac_id": "AC1-table-lists-stock-by-location",
+  "status": "pending",
+  "kind": "client",
+  "scenario_file": "client/tests/e2e/stock-by-location-table.spec.ts"
+ },
+ {
+  "id": "cli-4",
+  "description": "Playwright e2e (client/tests/e2e/stock-quantity-alignment.spec.ts) at route / seeds quantities of differing digit lengths under per-run-unique skus and asserts the stock-col-quantity header and every stock-qty-<sku>-<loc> cell compute text-align right while the SKU, location and tracking cells compute left",
+  "ac_id": "AC2-quantity-right-aligned",
+  "status": "pending",
+  "kind": "client",
+  "scenario_file": "client/tests/e2e/stock-quantity-alignment.spec.ts"
+ },
+ {
+  "id": "cli-5",
+  "description": "Playwright e2e (client/tests/e2e/stock-empty-location.spec.ts) at route / seeds a quantity-0 record at a per-run-unique location, picks that location through the warehouse-select combobox, and sees the stock-empty 'No stock at this location' state in place of the stock-table rows",
+  "ac_id": "AC3-empty-location-state",
+  "status": "pending",
+  "kind": "client",
+  "scenario_file": "client/tests/e2e/stock-empty-location.spec.ts"
+ }
+]

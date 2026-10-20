@@ -1,0 +1,18 @@
+{
+  "id": "AC3-par-level-not-tracked",
+  "status": "passing",
+  "given": "a SKU holding stock, for which par level is not tracked",
+  "when": "the operator opens that SKU's detail view",
+  "then": "the par level region shows an explicit 'not tracked', never a blank region or an error",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Par-level is a separate optional detail region; it can render blank or crash while the location list and tracking codes are correct."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract over EP5: F1 does not track par level, so the service returns par_level null and the sku-par-level card renders sku-par-not-tracked 'Not tracked' from that real response, never a blank region or sku-error. No persistence change (no par column in F1); Playwright asserts the region against the live API on the paired branch.",
+  "ui_seams": [
+    "sku-par-level",
+    "sku-par-not-tracked"
+  ],
+  "api_contract_id": "EP5-sku-detail"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "AC2-retrieve-stock-record",
+  "status": "passing",
+  "given": "a stock record previously filed for a (sku, location) pair",
+  "when": "the operator retrieves the stock for that same (sku, location) later",
+  "then": "the returned record shows the same SKU, location, quantity and tracking_code (or 'not tracked' when none was filed) that were filed",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "Read-back of persisted state across a later request; filing can confirm success while retrieval is broken (or vice versa)."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E read-back: the stock-lookup panel calls GET /api/stock/record?sku=&location= (app/routes/stock.py -> StockService.get_record -> StockRepository.get_by_key, a unique-key lookup on (sku, location)) in a later request and lookup-result renders the persisted values; a null tracking_code renders lookup-not-tracked. Verified against the real paired branch, never a mocked response, so a broken read path fails independently of filing.",
+  "ui_seams": [
+    "stock-lookup",
+    "lookup-sku",
+    "lookup-location",
+    "lookup-submit",
+    "lookup-result",
+    "lookup-not-tracked"
+  ],
+  "api_contract_id": "EP2-get-stock-record"
+}

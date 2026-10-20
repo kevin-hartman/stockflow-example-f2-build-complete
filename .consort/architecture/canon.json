@@ -1,0 +1,31 @@
+{
+  "established_by": "F1-stock-visibility",
+  "established_at": "2026-10-20T05:43:27.337Z",
+  "ac_layers": [
+    "E2E",
+    "API"
+  ],
+  "nfr_posture": [],
+  "invariant_patterns": [
+    {
+      "type": "unique",
+      "brief": "A composite UNIQUE constraint on (sku, location) rejects a second row for the same pair at the DB level."
+    },
+    {
+      "type": "not_null",
+      "brief": "stock_records.sku is NOT NULL; inserting a row without a sku is rejected by the DB."
+    },
+    {
+      "type": "check",
+      "brief": "A CHECK (quantity >= 0) constraint rejects a negative quantity at the DB level, even when the service is bypassed."
+    },
+    {
+      "type": "transactional",
+      "brief": "A re-file of an existing (sku, location) is a single atomic upsert (INSERT ... ON CONFLICT (sku, location) DO UPDATE): afterwards exactly one row exists carrying the new quantity/tracking_code, with no duplicate and no unique-violation surfaced."
+    },
+    {
+      "type": "migration_reversible",
+      "brief": "Initial create_table: after downgrade to this migration's down_revision then upgrade head, stock_records and its columns, UNIQUE (sku, location) and CHECK (quantity >= 0) are present again (schema recreated; no row survival is claimed for the initial creation)."
+    }
+  ]
+}

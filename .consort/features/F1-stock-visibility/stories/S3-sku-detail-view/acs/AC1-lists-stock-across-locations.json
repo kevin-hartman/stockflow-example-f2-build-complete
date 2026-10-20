@@ -1,0 +1,16 @@
+{
+  "id": "AC1-lists-stock-across-locations",
+  "status": "passing",
+  "given": "a SKU holding stock at several locations, and other SKUs also holding stock",
+  "when": "the operator opens that SKU's detail view",
+  "then": "the view lists exactly that SKU's locations holding stock, each with its quantity, and no other SKU's stock",
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract: SkuDetailPage (client/src/pages, route /sku/:sku) loads via api/skus.ts + useSkuDetail from GET /api/skus/{sku} (app/routes/skus.py -> StockService.get_sku_detail -> StockRepository.list_held_for_sku, WHERE sku = :sku AND quantity > 0 ORDER BY location) and renders one sku-location row per returned location with its right-aligned quantity. Filtering to this SKU is a repository query concern, never client-side; a Playwright test seeds several SKUs on the paired branch and asserts only this SKU's locations appear.",
+  "ui_seams": [
+    "sku-detail",
+    "sku-locations",
+    "sku-location-<loc>",
+    "sku-qty-<loc>"
+  ],
+  "api_contract_id": "EP5-sku-detail"
+}

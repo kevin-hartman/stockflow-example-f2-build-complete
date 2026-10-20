@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "feature_id": "F1-stock-visibility",
+  "stories": {
+    "S1-file-stock": {
+      "status": "done",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T05:51:30.642Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T05:51:30.642Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s1-file-stock-exp1",
+        "parent": "feature-f1-stock-visibility",
+        "n": 1,
+        "status": "merged",
+        "cut_at": "2026-10-20T13:07:02.331Z",
+        "design_fingerprint": "db7522b401bc127e",
+        "closed_at": "2026-10-20T13:24:42.878Z"
+      },
+      "acceptance": {
+        "decision": "accepted",
+        "history": [
+          {
+            "decision": "accepted",
+            "at": "2026-10-20T13:24:42.878Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "at": "2026-10-20T13:24:42.878Z"
+      }
+    },
+    "S2-stock-by-location-table": {
+      "status": "done",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T05:52:14.045Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T05:52:14.045Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s2-stock-by-location-table-exp1",
+        "parent": "feature-f1-stock-visibility",
+        "n": 1,
+        "status": "merged",
+        "cut_at": "2026-10-20T13:24:59.295Z",
+        "design_fingerprint": "3fedb192b688840f",
+        "closed_at": "2026-10-20T13:29:21.583Z"
+      },
+      "acceptance": {
+        "decision": "accepted",
+        "history": [
+          {
+            "decision": "accepted",
+            "at": "2026-10-20T13:29:21.583Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "at": "2026-10-20T13:29:21.583Z"
+      }
+    },
+    "S3-sku-detail-view": {
+      "status": "awaiting-acceptance",
+      "gate": {
+        "status": "approved",
+        "history": [
+          {
+            "action": "approved",
+            "at": "2026-10-20T05:52:41.492Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "approved_at": "2026-10-20T05:52:41.492Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s3-sku-detail-view-exp1",
+        "parent": "feature-f1-stock-visibility",
+        "n": 1,
+        "status": "active",
+        "cut_at": "2026-10-20T13:29:36.201Z",
+        "design_fingerprint": "378f3cbc3ccbf910"
+      },
+      "acceptance": {
+        "decision": null,
+        "history": []
+      }
+    }
+  },
+  "build_queue": [],
+  "build_active": "S3-sku-detail-view"
+}

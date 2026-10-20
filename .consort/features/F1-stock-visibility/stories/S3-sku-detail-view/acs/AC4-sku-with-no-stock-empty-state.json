@@ -1,0 +1,17 @@
+{
+  "id": "AC4-sku-with-no-stock-empty-state",
+  "status": "passing",
+  "given": "a SKU that holds no stock at any location (no records, or only quantity-0 records)",
+  "when": "the operator opens that SKU's detail view",
+  "then": "an explicit empty state stating the SKU has no stock at any location is shown, never a blank page or an error page",
+  "independence": {
+    "distinct_from_prior": true,
+    "rationale": "The no-stock path is independently breakable from the populated view: a SKU with stock can render correctly while a stockless SKU yields a blank or error page."
+  },
+  "layer": "E2E",
+  "architectural_notes": "E2E client-server contract over EP5: for a SKU with no records or only quantity-0 records the service returns 200 with locations [] (no 404, consistent with OD2: no SKU catalog), and SkuDetailPage renders the sku-empty 'This SKU has no stock at any location' state instead of rows or an error page. Playwright seeds a quantity-0-only SKU plus an unfiled SKU on the paired branch, never a mocked envelope.",
+  "ui_seams": [
+    "sku-empty"
+  ],
+  "api_contract_id": "EP5-sku-detail"
+}

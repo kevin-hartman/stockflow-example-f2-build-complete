@@ -1,0 +1,266 @@
+{
+  "feature_id": "F1-stock-visibility",
+  "service_backed": true,
+  "layers": [
+    {
+      "name": "routes",
+      "role": "boundary",
+      "module": "app/routes/",
+      "may_import": [
+        "service"
+      ],
+      "renders_via": "react"
+    },
+    {
+      "name": "services",
+      "role": "service",
+      "module": "app/services/",
+      "may_import": [
+        "repository",
+        "models"
+      ]
+    },
+    {
+      "name": "repositories",
+      "role": "repository",
+      "module": "app/repositories/",
+      "may_import": [
+        "models",
+        "infrastructure"
+      ]
+    },
+    {
+      "name": "models",
+      "role": "models",
+      "module": "app/models/",
+      "may_import": [
+        "infrastructure"
+      ]
+    },
+    {
+      "name": "database",
+      "role": "infrastructure",
+      "module": "app/database.py",
+      "may_import": []
+    }
+  ],
+  "api_contracts": [
+    {
+      "id": "EP1-file-stock",
+      "method": "POST",
+      "path": "/api/stock",
+      "shape": "object",
+      "item": "request body {sku: string (required, trimmed, non-empty), location: string (required, trimmed, non-empty; existing or new), quantity: integer >= 0 (required), tracking_code: string|null (optional; blank/omitted stored as null)}; response 200 is the filed StockRecord {sku: string, location: string, quantity: integer, tracking_code: string|null}. Same (sku, location) re-file upserts in place and returns the same 200 shape. Validation failure is 422 {detail: [{field: 'sku'|'location'|'quantity'|'tracking_code', message: string}]} naming the offending field; nothing is stored.",
+      "story": "S1-file-stock"
+    },
+    {
+      "id": "EP2-get-stock-record",
+      "method": "GET",
+      "path": "/api/stock/record",
+      "query": [
+        "sku",
+        "location"
+      ],
+      "shape": "object",
+      "item": "StockRecord {sku: string, location: string, quantity: integer, tracking_code: string|null (null = not tracked)}; 404 {detail: string} when no record exists for the (sku, location) pair.",
+      "story": "S1-file-stock"
+    },
+    {
+      "id": "EP3-list-locations",
+      "method": "GET",
+      "path": "/api/locations",
+      "shape": "list",
+      "item": "bare JSON array of strings: every distinct stock_records.location on record, sorted ascending, not filtered by SKU; [] when none.",
+      "story": "S1-file-stock"
+    },
+    {
+      "id": "EP4-list-stock",
+      "method": "GET",
+      "path": "/api/stock",
+      "query": [
+        "location"
+      ],
+      "shape": "list",
+      "item": "bare JSON array of StockRecord {sku: string, location: string, quantity: integer (> 0), tracking_code: string|null (null = not tracked)}: one entry per (sku, location) HOLDING stock (quantity > 0), ordered by location then sku; optional location filters to that one location; [] when nothing is held (incl. a location on record with only quantity-0 records).",
+      "story": "S2-stock-by-location-table"
+    },
+    {
+      "id": "EP5-sku-detail",
+      "method": "GET",
+      "path": "/api/skus/{sku}",
+      "shape": "object",
+      "item": "SkuDetail {sku: string, locations: array of {location: string, quantity: integer (> 0), tracking_code: string|null (null = not tracked)} for ONLY this sku's records holding stock (quantity > 0), ordered by location; [] when the sku has no records or only quantity-0 records (still 200, never 404); par_level: null (par level is not tracked in F1, always null)}.",
+      "story": "S3-sku-detail-view"
+    }
+  ],
+  "persistence_invariants": [
+    {
+      "id": "PI1-sku-location-unique",
+      "type": "unique",
+      "table": "stock_records",
+      "brief": "A composite UNIQUE constraint on (sku, location) rejects a second row for the same pair at the DB level."
+    },
+    {
+      "id": "PI2-sku-not-null",
+      "type": "not_null",
+      "table": "stock_records",
+      "brief": "stock_records.sku is NOT NULL; inserting a row without a sku is rejected by the DB."
+    },
+    {
+      "id": "PI3-location-not-null",
+      "type": "not_null",
+      "table": "stock_records",
+      "brief": "stock_records.location is NOT NULL; inserting a row without a location is rejected by the DB."
+    },
+    {
+      "id": "PI4-quantity-not-null",
+      "type": "not_null",
+      "table": "stock_records",
+      "brief": "stock_records.quantity is NOT NULL; inserting a row without a quantity is rejected by the DB (tracking_code stays NULLABLE: absent = not tracked)."
+    },
+    {
+      "id": "PI5-quantity-non-negative",
+      "type": "check",
+      "table": "stock_records",
+      "brief": "A CHECK (quantity >= 0) constraint rejects a negative quantity at the DB level, even when the service is bypassed."
+    },
+    {
+      "id": "PI6-upsert-atomic",
+      "type": "transactional",
+      "table": "stock_records",
+      "brief": "A re-file of an existing (sku, location) is a single atomic upsert (INSERT ... ON CONFLICT (sku, location) DO UPDATE): afterwards exactly one row exists carrying the new quantity/tracking_code, with no duplicate and no unique-violation surfaced."
+    },
+    {
+      "id": "PI7-create-stock-records-reversible",
+      "type": "migration_reversible",
+      "table": "stock_records",
+      "brief": "Initial create_table: after downgrade to this migration's down_revision then upgrade head, stock_records and its columns, UNIQUE (sku, location) and CHECK (quantity >= 0) are present again (schema recreated; no row survival is claimed for the initial creation)."
+    }
+  ],
+  "access_patterns": [
+    {
+      "id": "AP1-distinct-locations",
+      "table": "stock_records",
+      "columns": [
+        "location"
+      ],
+      "story": "S1-file-stock",
+      "brief": "SELECT DISTINCT location FROM stock_records ORDER BY location, feeding the field-location / lookup-location option source (EP3); not served by the (sku, location) unique index whose leading column is sku."
+    },
+    {
+      "id": "AP2-stock-held-by-location",
+      "table": "stock_records",
+      "columns": [
+        "location",
+        "sku",
+        "quantity"
+      ],
+      "story": "S2-stock-by-location-table",
+      "brief": "SELECT sku, location, quantity, tracking_code FROM stock_records WHERE quantity > 0 [AND location = :loc] ORDER BY location, sku (EP4); location-leading filter + sort not served by the (sku, location) unique index."
+    }
+  ],
+  "nfrs": [
+    {
+      "id": "NFR1-stock-data-survives-migrations",
+      "brief_ref": "R1",
+      "tier": "product",
+      "applies_to": "F1-stock-visibility",
+      "fitness_functions": [
+        {
+          "clause": "The stock_records migration is reversible: downgrade to its down_revision then upgrade head recreates stock_records with its columns, UNIQUE (sku, location) and CHECK (quantity >= 0).",
+          "realized_by": [
+            "AC1-file-stock-record"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "requirement": "Stock records survive schema migrations. F1 creates stock_records (initial create_table), so its obligation is a reversible migration that recreates the schema; row-preservation applies to later ADDITIVE migrations on stock_records (declared on those stories). The 'adjustment keeps an unmodifiable timestamp and actor' clause is N/A for F1 (read-and-record only, no adjustments) and deferred to the adjustment feature (OD3).",
+      "fitness_function": "The stock_records migration is reversible: downgrade to its down_revision then upgrade head recreates stock_records with its columns, UNIQUE (sku, location) and CHECK (quantity >= 0)."
+    },
+    {
+      "id": "NFR2-no-negative-stock",
+      "brief_ref": "R2",
+      "tier": "product",
+      "applies_to": "F1-stock-visibility",
+      "fitness_functions": [
+        {
+          "clause": "POST /api/stock with a negative quantity returns 422 naming the 'quantity' field and stores no row.",
+          "realized_by": [
+            "AC1-file-stock-record"
+          ]
+        },
+        {
+          "clause": "A direct insert/update of stock_records with quantity < 0 on the paired branch is rejected by the CHECK constraint.",
+          "realized_by": [
+            "AC1-file-stock-record"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "requirement": "Stock never goes below zero. F1 has no pick/allocation operation, so the overcommit half of R2 is N/A here and belongs to the pick feature (OD3); F1 enforces the non-negative half at both the service and the DB.",
+      "fitness_function": "POST /api/stock with a negative quantity returns 422 naming the 'quantity' field and stores no row. AND A direct insert/update of stock_records with quantity < 0 on the paired branch is rejected by the CHECK constraint."
+    },
+    {
+      "id": "NFR3-sku-location-unique-addressable",
+      "brief_ref": "R3",
+      "tier": "product",
+      "applies_to": "F1-stock-visibility",
+      "fitness_functions": [
+        {
+          "clause": "Filing the same (sku, location) twice via POST /api/stock leaves exactly one stock_records row carrying the second filing's quantity and tracking_code, and both calls return 200.",
+          "realized_by": [
+            "AC3-collision-resolved-at-write"
+          ]
+        },
+        {
+          "clause": "A raw second INSERT of an existing (sku, location) on the paired branch is rejected by the UNIQUE constraint.",
+          "realized_by": [
+            "AC3-collision-resolved-at-write"
+          ]
+        }
+      ],
+      "hil_status": "accepted",
+      "requirement": "Every (sku, location) is uniquely addressable; a collision is resolved at write time by an in-place upsert, never a duplicate or an error.",
+      "fitness_function": "Filing the same (sku, location) twice via POST /api/stock leaves exactly one stock_records row carrying the second filing's quantity and tracking_code, and both calls return 200. AND A raw second INSERT of an existing (sku, location) on the paired branch is rejected by the UNIQUE constraint."
+    },
+    {
+      "id": "NFR4-real-branch-integration-tests",
+      "brief_ref": "R4",
+      "tier": "platform",
+      "applies_to": "F1-stock-visibility",
+      "fitness_function": "The integration test session fixture asserts the engine dialect is postgresql and its URL is the DATABASE_URL of the paired branch, failing fast if a sqlite/in-memory or mocked session is configured.",
+      "hil_status": "accepted",
+      "requirement": "Integration tests run against the paired Lakebase branch (DATABASE_URL from the post-checkout hook, database databricks_postgres), never a mock, stub, SQLite or in-memory substitute."
+    },
+    {
+      "id": "NFR5-spa-json-boundary",
+      "brief_ref": "R5",
+      "tier": "platform",
+      "applies_to": "F1-stock-visibility",
+      "fitness_function": "Every /api/* route responds application/json (never text/html), and a Playwright run navigating navbar -> /file -> submit keeps the same document (no full page reload).",
+      "hil_status": "accepted",
+      "requirement": "The UI is the React + TypeScript SPA under client/; the boundary returns JSON only and the client navigates without full-page reloads."
+    }
+  ],
+  "open_decisions": [
+    {
+      "id": "OD1-location-source",
+      "question": "Are locations a separate catalog table or derived from distinct stock_records.location, and what is an 'empty location'?",
+      "decision_status": "resolved",
+      "resolved_by_story": "S1-file-stock",
+      "resolution": "Derived: locations = DISTINCT stock_records.location (EP3); a new location comes into existence by filing stock at it. An 'empty location' (S2 stock-empty) is a location whose records all have quantity 0, which the CHECK (quantity >= 0) permits; no separate locations table in F1."
+    },
+    {
+      "id": "OD2-sku-catalog",
+      "question": "Is a separate SKU catalog needed to decide whether a SKU is 'known', or does stock_records establish it?",
+      "decision_status": "resolved",
+      "resolved_by_story": "S1-file-stock",
+      "resolution": "No SKU catalog in F1: the first filing of a SKU establishes it; any non-empty trimmed sku string is accepted. A later feature introducing an unknown-SKU rule must reconcile with this."
+    },
+    {
+      "id": "OD3-adjustment-audit-and-overcommit",
+      "question": "Where do R1's unmodifiable adjustment timestamp+actor and R2's pick-overcommit rejection live (adjustment/pick ledger table)?",
+      "decision_status": "deferred"
+    }
+  ]
+}

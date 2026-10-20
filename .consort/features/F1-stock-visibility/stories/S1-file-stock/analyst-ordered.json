@@ -1,0 +1,273 @@
+{
+  "items": [
+    {
+      "id": "T8",
+      "description": "The integration test session fixture asserts the engine dialect is postgresql and its URL equals the paired branch DATABASE_URL, failing fast on a sqlite/in-memory or mocked session",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR4-real-branch-integration-tests"
+    },
+    {
+      "id": "T9",
+      "description": "The database connection URL is read from the DATABASE_URL environment variable, with no hard-coded connection string in app/",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness"
+    },
+    {
+      "id": "T7",
+      "description": "Downgrading to the stock_records migration's own down_revision then upgrade head recreates stock_records with its columns, UNIQUE (sku, location) and CHECK (quantity >= 0) (marked @pytest.mark.migration)",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI7-create-stock-records-reversible",
+      "nfr_id": "NFR1-stock-data-survives-migrations",
+      "schema_change_id": "SC1-create-stock-records"
+    },
+    {
+      "id": "T1",
+      "description": "A direct INSERT into stock_records with sku NULL is rejected by the NOT NULL constraint on the real paired branch",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI2-sku-not-null"
+    },
+    {
+      "id": "T2",
+      "description": "A direct INSERT into stock_records with location NULL is rejected by the NOT NULL constraint on the real paired branch",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI3-location-not-null"
+    },
+    {
+      "id": "T3",
+      "description": "A direct INSERT into stock_records with quantity NULL is rejected by the NOT NULL constraint on the real paired branch, while tracking_code NULL is accepted",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI4-quantity-not-null"
+    },
+    {
+      "id": "T4",
+      "description": "A direct INSERT into stock_records with quantity < 0 is rejected by CHECK ck_stock_records_quantity_non_negative on the real paired branch",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI5-quantity-non-negative",
+      "nfr_id": "NFR2-no-negative-stock"
+    },
+    {
+      "id": "T33",
+      "description": "A raw second INSERT of an existing (sku, location) on the real paired branch is rejected by the UNIQUE constraint uq_stock_records_sku_location",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI1-sku-location-unique",
+      "nfr_id": "NFR3-sku-location-unique-addressable"
+    },
+    {
+      "id": "T34",
+      "description": "Two direct INSERT ... ON CONFLICT (sku, location) DO UPDATE statements on the same pair against the real paired branch leave exactly one row with the second quantity and tracking_code and raise no unique violation",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "fitness",
+      "invariant_id": "PI6-upsert-atomic"
+    },
+    {
+      "id": "T5",
+      "description": "StockService.file_stock called with its injected session and a negative quantity raises a validation error naming 'quantity' and never reaches the repository upsert (patched, assert-not-called)",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-no-negative-stock"
+    },
+    {
+      "id": "T6",
+      "description": "POST /api/stock with a negative quantity returns 422 naming the 'quantity' field and stores no row for that key",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR2-no-negative-stock"
+    },
+    {
+      "id": "T23",
+      "description": "Re-filing an existing (sku, location) with a different quantity returns 200 with the filed record carrying the new quantity (per-run-unique sku via uuid.uuid4())",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T24",
+      "description": "After re-filing an existing (sku, location) with a different quantity, GET /api/stock/record returns the NEW quantity, not the first-filed one",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T25",
+      "description": "After re-filing an existing (sku, location) with a different tracking_code, GET /api/stock/record returns the new tracking_code",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T26",
+      "description": "Re-filing an existing (sku, location) without a tracking_code makes GET /api/stock/record return tracking_code null (not tracked) with the new quantity",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T27",
+      "description": "Re-filing an existing (sku, location) twice never returns 409 or 500; both POSTs return 200",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T28",
+      "description": "After re-filing an existing (sku, location) at a unique location, GET /api/locations lists that location exactly once (no duplicate record)",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T29",
+      "description": "Filing the same sku at two different locations yields two coexisting records, each retrievable via GET /api/stock/record with its own quantity",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T30",
+      "description": "Filing two different skus at the same location yields two coexisting records, each retrievable with its own quantity",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T31",
+      "description": "Re-filing an existing (sku, location) with a negative quantity returns 422 naming the 'quantity' field and leaves the existing record's quantity unchanged",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T32",
+      "description": "Re-filing an existing location with the sku omitted returns 422 naming the 'sku' field",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "behavior"
+    },
+    {
+      "id": "T35",
+      "description": "Filing the same (sku, location) twice via POST /api/stock returns 200 both times and leaves exactly one stock_records row carrying the second quantity and tracking_code",
+      "ac_id": "AC3-collision-resolved-at-write",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR3-sku-location-unique-addressable"
+    },
+    {
+      "id": "T17",
+      "description": "Every /api/* response for the story's endpoints (200, 404 and 422 cases of EP1, EP2, EP3) has content-type application/json and never text/html",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "fitness",
+      "nfr_id": "NFR5-spa-json-boundary"
+    },
+    {
+      "id": "T10",
+      "description": "FileStockForm rendered alone lists the locations already on record from the real GET /api/locations in the field-location combobox listbox",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/FileStockForm.test.tsx"
+    },
+    {
+      "id": "T11",
+      "description": "FileStockForm field-location offers a 'Use new location' option when the typed location matches none on record",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/FileStockForm.test.tsx"
+    },
+    {
+      "id": "T12",
+      "description": "FileStockForm renders file-confirmation with the not-tracked indicator after submitting without a tracking_code against the real API",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/FileStockForm.test.tsx"
+    },
+    {
+      "id": "T13",
+      "description": "FileStockForm renders file-confirmation showing the submitted tracking_code after a submit that gave one against the real API",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/FileStockForm.test.tsx"
+    },
+    {
+      "id": "T14",
+      "description": "FileStockForm renders an inline form-error naming the quantity field when the real API rejects a negative quantity",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/FileStockForm.test.tsx"
+    },
+    {
+      "id": "T18",
+      "description": "StockLookup renders lookup-result with the filed sku, location, quantity and tracking_code for a record that exists in the real backend",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockLookup.test.tsx"
+    },
+    {
+      "id": "T19",
+      "description": "StockLookup renders the lookup-not-tracked indicator when the retrieved record has a null tracking_code",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockLookup.test.tsx"
+    },
+    {
+      "id": "T20",
+      "description": "StockLookup renders lookup-empty when the real API returns 404 for a (sku, location) with no record",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "component",
+      "scenario_file": "client/tests/components/StockLookup.test.tsx"
+    },
+    {
+      "id": "T15",
+      "description": "Playwright e2e (client/tests/e2e/file-stock.spec.ts) against the deployed app: navigate navbar -> /file, fill a crypto.randomUUID()-suffixed SKU, type a never-used location and accept the create option, enter a quantity, leave tracking code blank, click file-submit, and file-confirmation shows that sku, location, quantity and 'Not tracked' with no form-error blocking",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "client"
+    },
+    {
+      "id": "T16",
+      "description": "Playwright e2e (client/tests/e2e/file-stock.spec.ts) at /file: with a location already on record, open the field-location combobox and pick that location without retyping, fill a crypto.randomUUID()-suffixed SKU, quantity and a tracking_code, click file-submit, and file-confirmation shows the submitted sku, chosen location, quantity and tracking code",
+      "ac_id": "AC1-file-stock-record",
+      "status": "pending",
+      "kind": "client"
+    },
+    {
+      "id": "T21",
+      "description": "Playwright e2e (client/tests/e2e/retrieve-stock.spec.ts) at /file: file a record with a crypto.randomUUID()-suffixed SKU, location, quantity and tracking_code, then in a later lookup via stock-lookup (lookup-sku, lookup-location, lookup-submit) lookup-result shows the same sku, location, quantity and tracking code",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "client"
+    },
+    {
+      "id": "T22",
+      "description": "Playwright e2e (client/tests/e2e/retrieve-stock.spec.ts) at /file: file a record with a crypto.randomUUID()-suffixed SKU and no tracking_code, then looking it up via stock-lookup shows lookup-result with the filed quantity and the lookup-not-tracked element",
+      "ac_id": "AC2-retrieve-stock-record",
+      "status": "pending",
+      "kind": "client"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"id":"S3-sku-detail-view","asA":"warehouse operator","iWantTo":"open a SKU detail view","soThat":"I can see one SKU's stock everywhere","requires_e2e":true,"independence":{"distinct_from_prior":true,"rationale":"Adds a per-SKU detail page and par-level not-tracked state, distinct from filing and the table."}}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "fit-1",
+    "description": "Migration SC5 is reversible on the paired branch: downgrade to the migration's own down_revision (explicit revision id, not a relative step) then upgrade head recreates partial index ix_stock_records_location_sku_held on (location, sku) INCLUDE (quantity, tracking_code) WHERE quantity > 0 (marked @pytest.mark.migration)",
+    "ac_id": "AC1-table-lists-stock-by-location",
+    "status": "pending",
+    "kind": "fitness",
+    "schema_change_id": "SC5-add-location-sku-held-index"
+  },
+  {
+    "id": "fit-2",
+    "description": "Stock_records rows seeded with per-run-unique keys before the SC5 migration survive with identical sku, location, quantity and tracking_code after downgrade to its down_revision then upgrade head (additive index migration on a pre-existing table)",
+    "ac_id": "AC1-table-lists-stock-by-location",
+    "status": "pending",
+    "kind": "fitness",
+    "schema_change_id": "SC5-add-location-sku-held-index"
+  },
+  {
+    "id": "fit-3",
+    "description": "GET /api/stock responds with Content-Type application/json (never text/html) for both the unfiltered and the ?location= filtered request",
+    "ac_id": "AC1-table-lists-stock-by-location",
+    "status": "pending",
+    "kind": "fitness",
+    "nfr_id": "NFR5-spa-json-boundary"
+  },
+  {
+    "id": "fit-4",
+    "description": "The integration session fixture used for the stock listing asserts the engine dialect is postgresql and its URL equals the paired branch DATABASE_URL read from the environment, failing fast on a sqlite/in-memory or mocked session",
+    "ac_id": "AC1-table-lists-stock-by-location",
+    "status": "pending",
+    "kind": "fitness",
+    "nfr_id": "NFR4-real-branch-integration-tests"
+  }
+]
