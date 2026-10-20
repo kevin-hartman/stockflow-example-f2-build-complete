@@ -76,7 +76,7 @@ def adjust(body: AdjustIn, session: Session = Depends(get_session)):
     except StockRecordNotFound as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except NegativeStockLevel as exc:
-        return JSONResponse(status_code=422, content={"detail": [{"field": "delta", "message": str(exc)}]})
+        return JSONResponse(status_code=422, content={"detail": [{"field": exc.field, "message": str(exc)}]})
 
 
 @router.get("", response_model=list[AdjustmentOut])

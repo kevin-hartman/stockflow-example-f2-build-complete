@@ -14,7 +14,11 @@ class StockRecordNotFound(LookupError):
 
 
 class NegativeStockLevel(ValueError):
-    """A delta would take the stock level below zero."""
+    """An adjustment would take the stock level below zero; `field` names the offending input."""
+
+    def __init__(self, message: str, *, field: str):
+        super().__init__(message)
+        self.field = field
 
 
 class AdjustmentService:
@@ -22,7 +26,7 @@ class AdjustmentService:
         self, session: Session, *, sku: str, location: str, quantity: int, actor: str
     ) -> StockAdjustment:
         if quantity < 0:
-            raise ValueError("corrected quantity must be zero or more")
+            raise NegativeStockLevel("corrected quantity must be zero or more", field="quantity")
         return self._apply(session, sku=sku, location=location, actor=actor, compute=lambda _prior: quantity)
 
     def adjust_by_delta(
@@ -43,7 +47,9 @@ class AdjustmentService:
         quantity = compute(prior)
         if quantity < 0:
             repo.rollback()
-            raise NegativeStockLevel(f"Rejected: quantity would go below zero (current {prior}, result {quantity})")
+            raise NegativeStockLevel(
+                f"Rejected: quantity would go below zero (current {prior}, result {quantity})", field="delta"
+            )
         record.quantity = quantity
         repo.flush()
         adjustment = repo.add(
