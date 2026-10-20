@@ -15,7 +15,7 @@ normally walks a feature through two lanes: a *design* lane (plan → spec → U
 tests) and a *build* lane (TDD: RED → GREEN → REFACTOR).
 
 **The purpose of this repo is to skip the design lane and go straight to build – for F2.** F1
-is already built and merged on `main`; F2's design lane is authored and frozen at its gates –
+is already built and merged to `staging`; F2's design lane is authored and frozen at its gates –
 so you can stand this up as your own project and start F2's TDD build loop immediately, without
 redoing any of the up-front design work.
 
@@ -23,7 +23,7 @@ redoing any of the up-front design work.
 
 F1 is built; F2's design is complete; no F2 build code has been written yet.
 
-- **Feature F1 – "Record and view stock by SKU and location":** **built** and merged to `main`
+- **Feature F1 – "Record and view stock by SKU and location":** **built** and merged to `staging`
   (the React SPA + JSON API that files, retrieves, and lists a SKU's stock by location).
 - **Feature F2 – "Adjust the stock level of a SKU at a location":** design complete – feature-spec,
   UX design-guide, architecture, db-design, and the ordered test-list are all authored and gated
