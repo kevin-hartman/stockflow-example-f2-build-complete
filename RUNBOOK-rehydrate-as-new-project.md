@@ -109,7 +109,7 @@ reusable baseline rather than a live working repo. Encode the captured state in 
 pattern `<project>-<feature>-design-complete`:
 
 ```bash
-DURABLE="<project>-<feature>-design-complete"              # e.g. stockflow-example-f1-design-complete
+DURABLE="<project>-<feature>-design-complete"              # e.g. stockflow-example-f2-design-complete
 gh repo rename "$DURABLE" -R "$GH_OWNER/<current-repo>"     # rename on GitHub (old URL redirects)
 git remote set-url origin "git@github.com:$GH_OWNER/$DURABLE.git"
 cd .. && mv <current-dir> "$DURABLE" && cd "$DURABLE"       # match the local dir to the repo
@@ -123,7 +123,7 @@ future clone's parameters line up:
 - **`setup.sh`: nothing to change.** The project name is a runtime argument
   (`./setup.sh <project-name>` → `$NEW_NAME`), so the snapshot's own name is never baked in. The
   only repo reference in `setup.sh` is the Consort bootstrap URL (`databricks-solutions/consort`),
-  which points at the kit, not this snapshot – leave it. (Any `feature-f1-…` text in `setup.sh`
+  which points at the kit, not this snapshot – leave it. (Any `feature-f2-…` text in `setup.sh`
   comments is an illustrative example of the branch→feature-id derivation, not config.)
 
 > The durable snapshot is dormant – nobody develops on it. To start a new project from it, clone
@@ -175,7 +175,7 @@ git push origin main staging feature-<slug>   # the snapshot repo only
 ## Parameters (fill these in once)
 
 ```bash
-OLD_DIR="stockflow-example-f1-design-complete"      # the directory you cloned into
+OLD_DIR="stockflow-example-f2-design-complete"      # the directory you cloned into
 NEW_NAME="stockflow-3"                       # chosen project name (kebab-case, 1-63 chars,
                                              #   lowercase, start with a letter) = Lakebase id
                                              #   + dir name + git repo name
@@ -198,7 +198,7 @@ These are the clone-time steps (you've likely already done them):
 ```bash
 git clone git@github.com:<owner>/<pulled-repo>.git
 cd <pulled-repo>
-git checkout feature-f1-stock-visibility      # or whichever feature branch you want live
+git checkout feature-f2-stock-adjustment      # or whichever feature branch you want live
 (cd client && npm install)                     # UI projects only
 ```
 
@@ -265,7 +265,7 @@ each forked from its parent, as **long-running** (`no_expiry`).
 databricks postgres create-branch projects/"$NEW_NAME" staging -p "$PROFILE" -o json \
   --json '{"spec": {"source_branch": "projects/'"$NEW_NAME"'/branches/production", "no_expiry": true}}'
 
-databricks postgres create-branch projects/"$NEW_NAME" feature-f1-stock-visibility -p "$PROFILE" -o json \
+databricks postgres create-branch projects/"$NEW_NAME" feature-f2-stock-adjustment -p "$PROFILE" -o json \
   --json '{"spec": {"source_branch": "projects/'"$NEW_NAME"'/branches/staging", "no_expiry": true}}'
 ```
 
@@ -279,7 +279,7 @@ auth issue in Gotcha 3):
   --parent production --no-expiry --host "$HOST"
 
 ./scripts/lk lakebase-branch create \
-  --instance "$NEW_NAME" --branch feature-f1-stock-visibility \
+  --instance "$NEW_NAME" --branch feature-f2-stock-adjustment \
   --parent staging --no-expiry --host "$HOST"
 ```
 
