@@ -1,0 +1,18 @@
+{
+  "ordinal": 90,
+  "step": 0,
+  "label": "dispatch",
+  "kind": "dispatch",
+  "story": "S3-reject-negative-stock",
+  "action": {
+    "kind": "dispatch",
+    "story": "S3-reject-negative-stock"
+  },
+  "produced": [
+    ".consort/drive.pid",
+    ".consort/features/F2-stock-adjustment/pipeline.json",
+    ".consort/run-config.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

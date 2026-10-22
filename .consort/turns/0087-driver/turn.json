@@ -1,0 +1,30 @@
+{
+  "ordinal": 87,
+  "step": 0,
+  "label": "driver",
+  "kind": "invoke-role",
+  "role": "driver",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "invoke-role",
+    "role": "driver",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S2-adjust-by-delta/AC3-delta-audit-records-resulting-level/cycle-001.json",
+    ".consort/table-snapshots.jsonl",
+    ".consort/test-interactions.jsonl",
+    ".consort/test-run.jsonl",
+    "app/routes/adjustments.py",
+    "app/routes/errors.py"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "driver",
+    "model": "opus",
+    "toolCount": 8,
+    "finalTextChars": 594
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "ordinal": 82,
+  "step": 0,
+  "label": "dispatch",
+  "kind": "dispatch",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "dispatch",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/drive.pid",
+    ".consort/features/F2-stock-adjustment/pipeline.json",
+    ".consort/run-config.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

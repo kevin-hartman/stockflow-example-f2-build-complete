@@ -1,0 +1,33 @@
+{
+  "ordinal": 74,
+  "step": 0,
+  "label": "navigator-assess",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "mode": "assess",
+  "story": "S1-adjust-to-value",
+  "ac": "AC2-audit-record-captures-when-and-who",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S1-adjust-to-value",
+    "buildMode": "assess",
+    "ac": "AC2-audit-record-captures-when-and-who"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/AC2-audit-record-captures-when-and-who/green-failure.json",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/AC2-audit-record-captures-when-and-who/regression-assessment.json",
+    ".consort/experiments/F2-stock-adjustment/S1-adjust-to-value/exp1/outcomes.json"
+  ],
+  "deleted": [
+    ".consort/deploy/local.pid"
+  ],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "opus",
+    "toolCount": 4,
+    "finalTextChars": 827
+  }
+}

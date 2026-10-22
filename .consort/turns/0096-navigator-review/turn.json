@@ -1,0 +1,33 @@
+{
+  "ordinal": 96,
+  "step": 0,
+  "label": "navigator-review",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "mode": "review",
+  "story": "S3-reject-negative-stock",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S3-reject-negative-stock",
+    "buildMode": "review"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S3-reject-negative-stock/AC4-negative-rejected-at-write-without-form/cycle-001.json",
+    ".consort/cycles/F2-stock-adjustment/S3-reject-negative-stock/review-verdict.json",
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/outcomes.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/acs/AC4-negative-rejected-at-write-without-form.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/test-list-per-story.json",
+    ".consort/features/F2-stock-adjustment/test-list.json",
+    ".consort/features/F2-stock-adjustment/test-list.md"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 2,
+    "finalTextChars": 61
+  }
+}

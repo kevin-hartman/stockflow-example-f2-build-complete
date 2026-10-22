@@ -77,7 +77,7 @@
       }
     },
     "S3-reject-negative-stock": {
-      "status": "awaiting-acceptance",
+      "status": "done",
       "gate": {
         "status": "approved",
         "history": [
@@ -95,16 +95,25 @@
         "branch": "experiment-s3-reject-negative-stock-exp1",
         "parent": "feature-f2-stock-adjustment",
         "n": 1,
-        "status": "active",
+        "status": "merged",
         "cut_at": "2026-10-20T21:43:33.644Z",
-        "design_fingerprint": "1573ad81ec34e12c"
+        "design_fingerprint": "1573ad81ec34e12c",
+        "closed_at": "2026-10-22T05:30:56.371Z"
       },
       "acceptance": {
-        "decision": null,
-        "history": []
+        "decision": "accepted",
+        "history": [
+          {
+            "decision": "accepted",
+            "at": "2026-10-22T05:30:56.371Z",
+            "approver": "Kevin Hartman"
+          }
+        ],
+        "approver": "Kevin Hartman",
+        "at": "2026-10-22T05:30:56.371Z"
       }
     }
   },
   "build_queue": [],
-  "build_active": "S3-reject-negative-stock"
+  "build_active": null
 }

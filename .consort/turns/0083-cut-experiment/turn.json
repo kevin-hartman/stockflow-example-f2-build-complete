@@ -1,0 +1,20 @@
+{
+  "ordinal": 83,
+  "step": 0,
+  "label": "cut-experiment",
+  "kind": "cut-experiment",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "cut-experiment",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/experiments/F2-stock-adjustment/S2-adjust-by-delta/exp1/branch.txt",
+    ".consort/experiments/F2-stock-adjustment/S2-adjust-by-delta/exp1/notes.md",
+    ".consort/experiments/F2-stock-adjustment/S2-adjust-by-delta/exp1/outcomes.json",
+    ".consort/experiments/F2-stock-adjustment/S2-adjust-by-delta/exp1/timeline.json",
+    ".consort/features/F2-stock-adjustment/pipeline.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

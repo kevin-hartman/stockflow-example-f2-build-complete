@@ -1,0 +1,26 @@
+{
+  "ordinal": 72,
+  "step": 0,
+  "label": "navigator",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "story": "S1-adjust-to-value",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S1-adjust-to-value"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/test-run.jsonl",
+    "tests/test_stock_adjustments.py"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 5,
+    "finalTextChars": 1124
+  }
+}

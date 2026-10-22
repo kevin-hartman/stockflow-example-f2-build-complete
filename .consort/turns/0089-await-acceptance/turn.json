@@ -1,0 +1,19 @@
+{
+  "ordinal": 89,
+  "step": 0,
+  "label": "await-acceptance",
+  "kind": "await-acceptance",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "await-acceptance",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/cycles/F2-stock-adjustment/S2-adjust-by-delta/review.json",
+    ".consort/deploy/local.pid",
+    ".consort/features/F2-stock-adjustment/pipeline.json",
+    ".consort/features/F2-stock-adjustment/stories/S2-adjust-by-delta/deploy-evidence.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

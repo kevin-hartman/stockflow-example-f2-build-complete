@@ -1,0 +1,34 @@
+{
+  "ordinal": 80,
+  "step": 0,
+  "label": "navigator-review",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "mode": "review",
+  "story": "S1-adjust-to-value",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S1-adjust-to-value",
+    "buildMode": "review"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/AC4-actor-required/cycle-001.json",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/review-verdict.json",
+    ".consort/experiments/F2-stock-adjustment/S1-adjust-to-value/exp1/outcomes.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC1-form-sets-corrected-level.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/acs/AC4-actor-required.json",
+    ".consort/features/F2-stock-adjustment/stories/S1-adjust-to-value/test-list-per-story.json",
+    ".consort/features/F2-stock-adjustment/test-list.json",
+    ".consort/features/F2-stock-adjustment/test-list.md"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 2,
+    "finalTextChars": 229
+  }
+}

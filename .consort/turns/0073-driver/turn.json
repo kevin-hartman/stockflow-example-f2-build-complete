@@ -1,0 +1,35 @@
+{
+  "ordinal": 73,
+  "step": 0,
+  "label": "driver",
+  "kind": "invoke-role",
+  "role": "driver",
+  "story": "S1-adjust-to-value",
+  "action": {
+    "kind": "invoke-role",
+    "role": "driver",
+    "story": "S1-adjust-to-value"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/AC2-audit-record-captures-when-and-who/cycle-001.json",
+    ".consort/table-snapshots.jsonl",
+    ".consort/test-interactions.jsonl",
+    ".consort/test-run.jsonl",
+    "alembic/versions/20261020212107_create_stock_adjustments.py",
+    "app/main.py",
+    "app/models/__init__.py",
+    "app/models/stock_adjustment.py",
+    "app/repositories/adjustments.py",
+    "app/routes/adjustments.py",
+    "app/services/adjustments.py"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "driver",
+    "model": "opus",
+    "toolCount": 15,
+    "finalTextChars": 1384
+  }
+}

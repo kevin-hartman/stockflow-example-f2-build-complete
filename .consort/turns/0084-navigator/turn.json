@@ -1,0 +1,28 @@
+{
+  "ordinal": 84,
+  "step": 0,
+  "label": "navigator",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "story": "S2-adjust-by-delta",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S2-adjust-by-delta"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    "client/tests/components/AdjustDeltaPreview.test.tsx",
+    "client/tests/e2e/adjust-delta-decrease.spec.ts",
+    "client/tests/e2e/adjust-delta-increase.spec.ts",
+    "tests/test_adjust_by_delta_fitness.py"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 4,
+    "finalTextChars": 1088
+  }
+}

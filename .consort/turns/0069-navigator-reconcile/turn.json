@@ -1,0 +1,25 @@
+{
+  "ordinal": 69,
+  "step": 0,
+  "label": "navigator-reconcile",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "mode": "reconcile",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "buildMode": "reconcile"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/features/F2-stock-adjustment/reconcile-verdict.json"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 1,
+    "finalTextChars": 88
+  }
+}

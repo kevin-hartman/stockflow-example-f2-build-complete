@@ -1,0 +1,20 @@
+{
+  "ordinal": 91,
+  "step": 0,
+  "label": "cut-experiment",
+  "kind": "cut-experiment",
+  "story": "S3-reject-negative-stock",
+  "action": {
+    "kind": "cut-experiment",
+    "story": "S3-reject-negative-stock"
+  },
+  "produced": [
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/branch.txt",
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/notes.md",
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/outcomes.json",
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/timeline.json",
+    ".consort/features/F2-stock-adjustment/pipeline.json"
+  ],
+  "deleted": [],
+  "snapshotted": false
+}

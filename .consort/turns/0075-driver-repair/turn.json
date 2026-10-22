@@ -1,0 +1,31 @@
+{
+  "ordinal": 75,
+  "step": 0,
+  "label": "driver-repair",
+  "kind": "invoke-role",
+  "role": "driver",
+  "mode": "repair",
+  "story": "S1-adjust-to-value",
+  "ac": "AC2-audit-record-captures-when-and-who",
+  "action": {
+    "kind": "invoke-role",
+    "role": "driver",
+    "story": "S1-adjust-to-value",
+    "buildMode": "repair",
+    "ac": "AC2-audit-record-captures-when-and-who"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S1-adjust-to-value/AC2-audit-record-captures-when-and-who/green-failure.json",
+    "alembic/versions/20261020212107_create_stock_adjustments.py",
+    "tests/e2e/conftest.py"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "driver",
+    "model": "sonnet",
+    "toolCount": 3,
+    "finalTextChars": 723
+  }
+}

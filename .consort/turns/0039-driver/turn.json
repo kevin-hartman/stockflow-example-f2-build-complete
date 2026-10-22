@@ -1,0 +1,39 @@
+{
+  "ordinal": 39,
+  "step": 0,
+  "label": "driver",
+  "kind": "invoke-role",
+  "role": "driver",
+  "story": "S3-sku-detail-view",
+  "action": {
+    "kind": "invoke-role",
+    "role": "driver",
+    "story": "S3-sku-detail-view"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F1-stock-visibility/S3-sku-detail-view/AC1-lists-stock-across-locations/cycle-001.json",
+    ".consort/table-snapshots.jsonl",
+    ".consort/test-interactions.jsonl",
+    ".consort/test-run.jsonl",
+    "app/main.py",
+    "app/repositories/stock.py",
+    "app/routes/skus.py",
+    "app/services/stock.py",
+    "client/src/App.tsx",
+    "client/src/api/stock.ts",
+    "client/src/components/SkuLocationsTable.tsx",
+    "client/src/components/StockTable.tsx",
+    "client/src/hooks/useSkuDetail.ts",
+    "client/src/pages/HomePage.tsx",
+    "client/src/pages/SkuDetailPage.tsx"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "driver",
+    "model": "opus",
+    "toolCount": 10,
+    "finalTextChars": 366
+  }
+}

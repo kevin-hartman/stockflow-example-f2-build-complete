@@ -1,0 +1,29 @@
+{
+  "ordinal": 15,
+  "step": 0,
+  "label": "spec-author",
+  "kind": "invoke-role",
+  "role": "spec-author",
+  "story": "S3-sku-detail-view",
+  "action": {
+    "kind": "invoke-role",
+    "role": "spec-author",
+    "story": "S3-sku-detail-view"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/features/F1-stock-visibility/feature-spec.md",
+    ".consort/features/F1-stock-visibility/stories/S3-sku-detail-view/acs/AC1-lists-stock-across-locations.json",
+    ".consort/features/F1-stock-visibility/stories/S3-sku-detail-view/acs/AC2-shows-tracking-code.json",
+    ".consort/features/F1-stock-visibility/stories/S3-sku-detail-view/acs/AC3-par-level-not-tracked.json",
+    ".consort/features/F1-stock-visibility/stories/S3-sku-detail-view/acs/AC4-sku-with-no-stock-empty-state.json"
+  ],
+  "deleted": [],
+  "snapshotted": false,
+  "transcript": {
+    "role": "spec-author",
+    "model": "opus",
+    "toolCount": 1,
+    "finalTextChars": 696
+  }
+}

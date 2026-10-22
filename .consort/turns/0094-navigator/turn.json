@@ -1,0 +1,38 @@
+{
+  "ordinal": 94,
+  "step": 0,
+  "label": "navigator",
+  "kind": "invoke-role",
+  "role": "navigator",
+  "story": "S3-reject-negative-stock",
+  "action": {
+    "kind": "invoke-role",
+    "role": "navigator",
+    "story": "S3-reject-negative-stock"
+  },
+  "produced": [
+    ".consort/agent-live.log",
+    ".consort/cycles/F2-stock-adjustment/S3-reject-negative-stock/AC3-adjust-to-exactly-zero-accepted/cycle-001.json",
+    ".consort/experiments/F2-stock-adjustment/S3-reject-negative-stock/exp1/outcomes.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/acs/AC1-negative-delta-rejected-inline.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/acs/AC2-negative-corrected-value-rejected-inline.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/acs/AC3-adjust-to-exactly-zero-accepted.json",
+    ".consort/features/F2-stock-adjustment/stories/S3-reject-negative-stock/test-list-per-story.json",
+    ".consort/features/F2-stock-adjustment/test-list.json",
+    ".consort/features/F2-stock-adjustment/test-list.md",
+    ".consort/table-snapshots.jsonl",
+    ".consort/test-interactions.jsonl",
+    ".consort/test-run.jsonl",
+    "tests/test_reject_negative_stock.py"
+  ],
+  "deleted": [
+    ".consort/deploy/local.pid"
+  ],
+  "snapshotted": false,
+  "transcript": {
+    "role": "navigator",
+    "model": "sonnet",
+    "toolCount": 3,
+    "finalTextChars": 1017
+  }
+}
