@@ -209,7 +209,7 @@ git push origin main staging feature-<slug>
 ## Parameters (fill these in once)
 
 ```bash
-OLD_DIR="stockflow-example-f2-design-complete"      # the directory you cloned into
+OLD_DIR="stockflow-example-f2-build-complete"       # the directory you cloned into
 NEW_NAME="stockflow-3"                       # chosen project name (kebab-case, 1-63 chars,
                                              #   lowercase, start with a letter) = Lakebase id
                                              #   + dir name + git repo name
