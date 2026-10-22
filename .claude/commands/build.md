@@ -57,6 +57,6 @@ Hooks are owned by the project; this command file only consults them when presen
 
 ## Kit version
 
-Pinned to: `0.4.23`
+Pinned to: `0.4.24`
 
 The `lakebase-update-commands` bin re-pulls this command's canonical template while preserving your pre/post hooks.
