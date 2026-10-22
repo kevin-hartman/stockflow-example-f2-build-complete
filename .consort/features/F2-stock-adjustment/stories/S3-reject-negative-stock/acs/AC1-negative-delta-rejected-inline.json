@@ -1,6 +1,6 @@
 {
   "id": "AC1-negative-delta-rejected-inline",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator submits the adjustment form with a delta of -10 and their name as the actor",
   "then": "the adjustment is rejected with an inline error next to the delta field that names the field (for example 'quantity would go below zero'), never a generic 'bad request'; the quantity stays 7 and no audit record is created",

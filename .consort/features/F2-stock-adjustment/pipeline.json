@@ -77,7 +77,7 @@
       }
     },
     "S3-reject-negative-stock": {
-      "status": "building",
+      "status": "awaiting-acceptance",
       "gate": {
         "status": "approved",
         "history": [
@@ -89,6 +89,19 @@
         ],
         "approver": "Kevin Hartman",
         "approved_at": "2026-10-20T13:55:05.218Z"
+      },
+      "experiment": {
+        "slug": "exp1",
+        "branch": "experiment-s3-reject-negative-stock-exp1",
+        "parent": "feature-f2-stock-adjustment",
+        "n": 1,
+        "status": "active",
+        "cut_at": "2026-10-20T21:43:33.644Z",
+        "design_fingerprint": "1573ad81ec34e12c"
+      },
+      "acceptance": {
+        "decision": null,
+        "history": []
       }
     }
   },

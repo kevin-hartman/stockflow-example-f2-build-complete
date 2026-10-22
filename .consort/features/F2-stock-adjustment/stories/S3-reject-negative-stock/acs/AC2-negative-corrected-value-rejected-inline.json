@@ -1,6 +1,6 @@
 {
   "id": "AC2-negative-corrected-value-rejected-inline",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator submits the adjustment form with a corrected quantity of -2 and their name as the actor",
   "then": "the adjustment is rejected with an inline error next to the quantity field that names the field, the quantity stays 7, and no audit record is created",

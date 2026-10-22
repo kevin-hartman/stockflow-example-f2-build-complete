@@ -1,6 +1,6 @@
 {
   "id": "AC3-adjust-to-exactly-zero-accepted",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "the operator submits the adjustment form with a delta of -7 and their name as the actor",
   "then": "the adjustment is accepted with the normal confirmation, the quantity becomes 0, and an audit record is created",

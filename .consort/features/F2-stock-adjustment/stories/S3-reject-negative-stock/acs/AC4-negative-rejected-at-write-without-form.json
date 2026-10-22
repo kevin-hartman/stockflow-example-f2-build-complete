@@ -1,6 +1,6 @@
 {
   "id": "AC4-negative-rejected-at-write-without-form",
-  "status": "draft",
+  "status": "passing",
   "given": "an existing stock record for a (sku, location) pair with quantity 7",
   "when": "an adjustment that would take it to -3 is submitted directly to the system, bypassing the form's own checks",
   "then": "the adjustment is rejected with an error naming the offending field, the quantity stays 7 (never stored negative), and no audit record is created",
