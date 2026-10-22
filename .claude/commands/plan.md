@@ -131,6 +131,6 @@ If `.claude/commands/plan.pre-hook.md` / `plan.post-hook.md` exist, they run bef
 
 ## Kit version
 
-Pinned to: `0.4.23`
+Pinned to: `0.4.24`
 
 The `lakebase-update-commands` bin re-pulls this command's canonical template while preserving your hooks.
