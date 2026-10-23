@@ -66,6 +66,6 @@ If `.claude/commands/deploy.pre-hook.md` / `deploy.post-hook.md` exist, they run
 
 ## Kit version
 
-Pinned to: `0.4.25`
+Pinned to: `0.4.26`
 
 The `lakebase-update-commands` bin re-pulls this command's canonical template while preserving your hooks.
