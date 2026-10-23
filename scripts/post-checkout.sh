@@ -28,7 +28,7 @@ fi
 # uvicorn) AND node-postgres pick it up, and written into .env below so the app + run-tests
 # subprocesses inherit the same label.
 PGAPPNAME="${CONSORT_VERSION:+consort/${CONSORT_VERSION}}"
-: "${PGAPPNAME:=scm-utils/0.3.7}"
+: "${PGAPPNAME:=scm-utils/0.3.8}"
 export PGAPPNAME
 
 # Scope guard: this hook only activates when a project-level .env exists at
