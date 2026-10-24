@@ -39,7 +39,7 @@ fi
 # .env; else `consort/<consort-version>` when driven by Consort, else `scm-utils/<scm-version>`
 # (the scm-utils version is stamped in at scaffold time).
 : "${PGAPPNAME:=${CONSORT_VERSION:+consort/${CONSORT_VERSION}}}"
-: "${PGAPPNAME:=scm-utils/0.3.8}"
+: "${PGAPPNAME:=scm-utils/0.3.9}"
 export PGAPPNAME
 
 DB_NAME="${1:-databricks_postgres}"
