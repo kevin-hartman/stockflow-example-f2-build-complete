@@ -123,6 +123,6 @@ The post-hook is owned by the project, not the kit: this command file only consu
 
 ## Kit version
 
-Pinned to: `0.4.26`
+Pinned to: `0.4.27`
 
 Bumping the kit may shift agent prompts. The `lakebase-update-commands` bin re-pulls canonical templates while preserving the post-hook file above.
